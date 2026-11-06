@@ -1,14 +1,17 @@
 import { createClient } from '@supabase/supabase-js';
+import type { Database } from './database.types';
 
 const url=import.meta.env.VITE_SUPABASE_URL?.trim();
 const key=import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
 
-let client: ReturnType<typeof createClient> | null=null;
+let client: ReturnType<typeof createClient<Database>> | null=null;
 let configured=false;
 
 if(url && key && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(url)){
   try {
-    client=createClient(url,key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+    client=createClient<Database>(url,key,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}
+    });
     configured=true;
   } catch(error) {
     console.error('Supabase client initialization failed:',error);
