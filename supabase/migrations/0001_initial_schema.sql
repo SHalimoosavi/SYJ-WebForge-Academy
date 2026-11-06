@@ -209,18 +209,8 @@ using (public.is_batch_trainer(batch_id));
 create policy "read_published_lessons" on public.lessons for select to anon, authenticated
 using (published or public.current_role() in ('trainer','admin'));
 create policy "trainer_manage_lessons" on public.lessons for all to authenticated
-using (public.current_role()='admin' or exists (
-  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
-  join public.batch_memberships m on m.batch_id=a.batch_id
-  where a.id=assignment_id and m.learner_id=submissions.learner_id
-    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
-))
-with check (public.current_role()='admin' or exists (
-  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
-  join public.batch_memberships m on m.batch_id=a.batch_id
-  where a.id=assignment_id and m.learner_id=submissions.learner_id
-    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
-));
+using (public.current_role() in ('trainer','admin'))
+with check (public.current_role() in ('trainer','admin'));
 
 create policy "learner_own_progress" on public.lesson_progress for select to authenticated
 using (learner_id=(select auth.uid()));
@@ -251,8 +241,18 @@ create policy "learner_update_own_submission" on public.submissions for update t
 using (learner_id=(select auth.uid()) and status in ('submitted','revision_requested'))
 with check (learner_id=(select auth.uid()) and status in ('submitted','revision_requested'));
 create policy "trainer_review_submissions" on public.submissions for update to authenticated
-using (public.current_role() in ('trainer','admin'))
-with check (public.current_role() in ('trainer','admin'));
+using (public.current_role()='admin' or exists (
+  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
+  join public.batch_memberships m on m.batch_id=a.batch_id
+  where a.id=assignment_id and m.learner_id=submissions.learner_id
+    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
+))
+with check (public.current_role()='admin' or exists (
+  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
+  join public.batch_memberships m on m.batch_id=a.batch_id
+  where a.id=assignment_id and m.learner_id=submissions.learner_id
+    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
+));
 
 create policy "learner_read_own_attendance" on public.attendance for select to authenticated
 using (learner_id=(select auth.uid()) or public.is_batch_trainer(batch_id));
