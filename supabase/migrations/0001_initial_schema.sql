@@ -3,18 +3,18 @@
 create extension if not exists pgcrypto;
 
 -- Create enum types only when absent (safe if a previous attempt created them).
-do $ begin
+do $app_role$ begin
   create type public.app_role as enum ('learner', 'trainer', 'admin');
 exception when duplicate_object then null;
-end $;
-do $ begin
+end $app_role$;
+do $app_role$ begin
   create type public.batch_status as enum ('upcoming', 'active', 'completed');
 exception when duplicate_object then null;
-end $;
-do $ begin
+end $app_role$;
+do $app_role$ begin
   create type public.submission_status as enum ('submitted', 'reviewing', 'approved', 'revision_requested');
 exception when duplicate_object then null;
-end $;
+end $app_role$;
 
 create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
