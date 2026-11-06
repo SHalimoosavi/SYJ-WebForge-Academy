@@ -218,6 +218,12 @@ create policy "learner_write_own_progress" on public.lesson_progress for insert 
 with check (learner_id=(select auth.uid()) and exists (select 1 from public.lessons l where l.id=lesson_id and l.published));
 create policy "learner_update_own_progress" on public.lesson_progress for update to authenticated
 using (learner_id=(select auth.uid())) with check (learner_id=(select auth.uid()));
+create policy "trainer_reads_batch_progress" on public.lesson_progress for select to authenticated
+using (public.current_role()='admin' or exists (
+  select 1 from public.batch_memberships m join public.batches b on b.id=m.batch_id
+  where m.learner_id=lesson_progress.learner_id and b.trainer_id=(select auth.uid())
+    and public.current_role()='trainer'
+));
 
 create policy "read_published_assignments" on public.assignments for select to authenticated
 using ((published and (batch_id is null or public.is_batch_member(batch_id))) or public.current_role()='admin' or (public.current_role()='trainer' and batch_id is not null and public.is_batch_trainer(batch_id)));
