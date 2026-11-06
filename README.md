@@ -18,9 +18,9 @@ Without Supabase credentials the app runs in **preview mode** with clearly label
 
 ## Supabase setup
 1. Create a free Supabase project.
-2. Open SQL Editor and run `supabase/migrations/0001_initial_schema.sql`.
-3. In Authentication settings, enable email/password sign-up and configure the deployed GitHub Pages URL as a redirect URL.
-4. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as GitHub Actions repository secrets (or variables).
+2. Open SQL Editor and run `supabase/migrations/0001_initial_schema.sql`.\n3. Run `supabase/seed.sql` to publish all 40 bilingual lesson records.
+4. In Authentication settings, enable email/password sign-up and configure the deployed GitHub Pages URL as a redirect URL.
+5. Set `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` as GitHub Actions repository secrets (or variables).
 5. Never put a Supabase service-role key in this frontend repository.
 
 The first registered user is **not automatically an administrator**. Promote the trusted trainer account manually in the Supabase SQL editor using the documented admin bootstrap statement in `supabase/README.md`.
