@@ -1,7 +1,8 @@
 # Supabase setup and security
 
 1. Create a Supabase project and run `migrations/0001_initial_schema.sql` in SQL Editor.
-2. Run `seed.sql` to publish the bilingual 40-day curriculum.\n3. Enable Email provider in Authentication.
+2. Run `seed.sql` to publish the bilingual 40-day curriculum.
+3. Enable Email provider in Authentication.
 4. Set Site URL to the GitHub Pages URL and add that URL to allowed redirect URLs.
 5. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to GitHub Actions repository secrets.
 6. Sign up with the trusted owner email, obtain the user's UUID from Authentication > Users, then run:
