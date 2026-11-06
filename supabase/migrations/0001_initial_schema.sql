@@ -193,12 +193,12 @@ using (status in ('upcoming','active'));
 create policy "batch_member_or_trainer_read" on public.batches for select to authenticated
 using (trainer_id=(select auth.uid()) or public.is_batch_member(id) or public.current_role()='admin');
 create policy "trainer_manage_own_batches" on public.batches for all to authenticated
-using (trainer_id=(select auth.uid()) or public.current_role()='admin')
-with check (trainer_id=(select auth.uid()) or public.current_role()='admin');
+using ((trainer_id=(select auth.uid()) and public.current_role() in ('trainer','admin')) or public.current_role()='admin')
+with check ((trainer_id=(select auth.uid()) and public.current_role() in ('trainer','admin')) or public.current_role()='admin');
 
 -- Membership: learner may join themselves; trainer/admin can inspect and manage their batch.
 create policy "learner_join_batch" on public.batch_memberships for insert to authenticated
-with check (learner_id=(select auth.uid()) and public.current_role()='learner');
+with check (learner_id=(select auth.uid()) and public.current_role()='learner' and exists (select 1 from public.batches b where b.id=batch_id and b.status in ('upcoming','active')));
 create policy "membership_read_self_or_trainer" on public.batch_memberships for select to authenticated
 using (learner_id=(select auth.uid()) or public.is_batch_trainer(batch_id));
 create policy "trainer_remove_members" on public.batch_memberships for delete to authenticated
