@@ -2,9 +2,19 @@
 -- Apply in Supabase SQL Editor. RLS is enabled on every application table.
 create extension if not exists pgcrypto;
 
-create type public.app_role as enum ('learner', 'trainer', 'admin');
-create type public.batch_status as enum ('upcoming', 'active', 'completed');
-create type public.submission_status as enum ('submitted', 'reviewing', 'approved', 'revision_requested');
+-- Create enum types only when absent (safe if a previous attempt created them).
+do $ begin
+  create type public.app_role as enum ('learner', 'trainer', 'admin');
+exception when duplicate_object then null;
+end $;
+do $ begin
+  create type public.batch_status as enum ('upcoming', 'active', 'completed');
+exception when duplicate_object then null;
+end $;
+do $ begin
+  create type public.submission_status as enum ('submitted', 'reviewing', 'approved', 'revision_requested');
+exception when duplicate_object then null;
+end $;
 
 create table public.profiles (
   id uuid primary key references auth.users(id) on delete cascade,
