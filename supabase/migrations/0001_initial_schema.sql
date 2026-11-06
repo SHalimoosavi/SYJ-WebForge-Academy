@@ -62,6 +62,7 @@ create table public.lesson_progress (
 create table public.assignments (
   id uuid primary key default gen_random_uuid(),
   lesson_id uuid not null references public.lessons(id) on delete cascade,
+  batch_id uuid references public.batches(id) on delete cascade,
   title_en text not null,
   title_hi text not null,
   instructions_en text not null default '',
@@ -114,7 +115,7 @@ set search_path = public, pg_temp
 as $$
   select exists (
     select 1 from public.batches b
-    where b.id = target_batch and (b.trainer_id = (select auth.uid()) or public.current_role() = 'admin')
+    where b.id = target_batch and ((b.trainer_id = (select auth.uid()) and public.current_role() in ('trainer','admin')) or public.current_role() = 'admin')
   )
 $$;
 
@@ -208,8 +209,18 @@ using (public.is_batch_trainer(batch_id));
 create policy "read_published_lessons" on public.lessons for select to anon, authenticated
 using (published or public.current_role() in ('trainer','admin'));
 create policy "trainer_manage_lessons" on public.lessons for all to authenticated
-using (public.current_role() in ('trainer','admin'))
-with check (public.current_role() in ('trainer','admin'));
+using (public.current_role()='admin' or exists (
+  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
+  join public.batch_memberships m on m.batch_id=a.batch_id
+  where a.id=assignment_id and m.learner_id=submissions.learner_id
+    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
+))
+with check (public.current_role()='admin' or exists (
+  select 1 from public.assignments a join public.batches b on b.id=a.batch_id
+  join public.batch_memberships m on m.batch_id=a.batch_id
+  where a.id=assignment_id and m.learner_id=submissions.learner_id
+    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
+));
 
 create policy "learner_own_progress" on public.lesson_progress for select to authenticated
 using (learner_id=(select auth.uid()));
@@ -219,19 +230,22 @@ create policy "learner_update_own_progress" on public.lesson_progress for update
 using (learner_id=(select auth.uid())) with check (learner_id=(select auth.uid()));
 
 create policy "read_published_assignments" on public.assignments for select to authenticated
-using (published or public.current_role() in ('trainer','admin'));
+using ((published and (batch_id is null or public.is_batch_member(batch_id))) or public.current_role()='admin' or (public.current_role()='trainer' and batch_id is not null and public.is_batch_trainer(batch_id)));
 create policy "trainer_manage_assignments" on public.assignments for all to authenticated
-using (public.current_role() in ('trainer','admin'))
-with check (public.current_role() in ('trainer','admin'));
+using (public.current_role()='admin' or (public.current_role()='trainer' and batch_id is not null and public.is_batch_trainer(batch_id)))
+with check (public.current_role()='admin' or (public.current_role()='trainer' and batch_id is not null and public.is_batch_trainer(batch_id)));
 
 create policy "learner_read_own_submissions" on public.submissions for select to authenticated
 using (learner_id=(select auth.uid()) or public.current_role()='admin' or exists (
-  select 1 from public.assignments a join public.lessons l on l.id=a.lesson_id
-  where a.id=assignment_id and public.current_role() in ('trainer','admin')
+  select 1 from public.assignments a join public.batch_memberships m on m.batch_id=a.batch_id
+  join public.batches b on b.id=a.batch_id
+  where a.id=assignment_id and m.learner_id=submissions.learner_id
+    and b.trainer_id=(select auth.uid()) and public.current_role()='trainer'
 ));
 create policy "learner_submit_own_work" on public.submissions for insert to authenticated
 with check (learner_id=(select auth.uid()) and exists (
   select 1 from public.assignments a where a.id=assignment_id and a.published
+    and (a.batch_id is null or public.is_batch_member(a.batch_id))
 ));
 create policy "learner_update_own_submission" on public.submissions for update to authenticated
 using (learner_id=(select auth.uid()) and status in ('submitted','revision_requested'))
@@ -245,6 +259,21 @@ using (learner_id=(select auth.uid()) or public.is_batch_trainer(batch_id));
 create policy "trainer_manage_attendance" on public.attendance for all to authenticated
 using (public.is_batch_trainer(batch_id))
 with check (public.is_batch_trainer(batch_id));
+
+-- Expose aggregate seat counts only; never expose membership identities publicly.
+create or replace function public.list_open_batches()
+returns table(id uuid, name text, capacity integer, status public.batch_status, enrolled_count bigint)
+language sql stable security definer
+set search_path = public, pg_temp
+as $
+  select b.id, b.name, b.capacity, b.status, count(m.id) as enrolled_count
+  from public.batches b
+  left join public.batch_memberships m on m.batch_id=b.id
+  where b.status in ('upcoming','active')
+  group by b.id
+  order by b.created_at
+$;
+grant execute on function public.list_open_batches() to anon, authenticated;
 
 -- Grant only the minimum table privileges; RLS remains authoritative.
 grant usage on schema public to anon, authenticated;
