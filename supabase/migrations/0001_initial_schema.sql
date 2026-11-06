@@ -265,14 +265,14 @@ create or replace function public.list_open_batches()
 returns table(id uuid, name text, capacity integer, status public.batch_status, enrolled_count bigint)
 language sql stable security definer
 set search_path = public, pg_temp
-as $
+as $batch_list$
   select b.id, b.name, b.capacity, b.status, count(m.id) as enrolled_count
   from public.batches b
   left join public.batch_memberships m on m.batch_id=b.id
   where b.status in ('upcoming','active')
   group by b.id
   order by b.created_at
-$;
+$batch_list$;
 grant execute on function public.list_open_batches() to anon, authenticated;
 
 -- Grant only the minimum table privileges; RLS remains authoritative.
