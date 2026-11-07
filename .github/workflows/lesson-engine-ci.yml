@@ -52,6 +52,8 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f supabase/tests/lesson_engine_security.sql
       - name: Run concurrent rate-limit and batch-capacity tests
         run: bash supabase/tests/concurrency.sh
+      - name: Verify old main frontend SQL contract after migration
+        run: psql -v ON_ERROR_STOP=1 -f supabase/tests/legacy_frontend_compatibility.sql
 
   frontend:
     runs-on: ubuntu-latest
@@ -72,6 +74,16 @@ jobs:
       - run: npm run lint
       - run: npm test
       - run: npm run build
+      - name: Checkout old main frontend for compatibility build
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-frontend
+      - name: Build old main frontend
+        working-directory: main-frontend
+        run: |
+          npm install
+          npm run build
       - name: Inspect production bundle for secrets and answer keys
         run: |
           if grep -R -n -E 'correctOptionId|correct_option_id|SUPABASE_SERVICE_ROLE|service_role|secret_key_base|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----' dist; then
