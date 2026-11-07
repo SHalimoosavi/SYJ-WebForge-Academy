@@ -9,11 +9,11 @@ on conflict(id) do nothing;
 -- Seed one two-question quiz and one quiz with no attempts for completion-denial coverage.
 insert into public.quizzes(id,lesson_id,title_en,title_hi,pass_percent,published)
 select '20000000-0000-4000-8000-000000000001',id,'Day 1 Check','दिन 1 जाँच',70,true
-from public.lessons where day_number=1
+from public.lessons where day_number=6
 on conflict(id) do nothing;
 insert into public.quizzes(id,lesson_id,title_en,title_hi,pass_percent,published)
 select '20000000-0000-4000-8000-000000000002',id,'Day 2 Check','दिन 2 जाँच',70,true
-from public.lessons where day_number=2
+from public.lessons where day_number=7
 on conflict(id) do nothing;
 
 insert into public.quiz_questions(id,quiz_id,position,prompt_en,prompt_hi,options) values
