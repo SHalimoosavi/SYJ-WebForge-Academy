@@ -127,11 +127,7 @@ export const day04:LessonContent & {quizId:string}={
             "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
           }
         }
-      ],
-      "explanation": {
-        "en": "Web standards and semantics make content more reliable, understandable and accessible.",
-        "hi": "Web standards और semantics content को reliable, understandable और accessible बनाते हैं।"
-      }
+      ]
     },
     {
       "id": "60000000-0000-4000-8000-000000000042",
@@ -161,11 +157,7 @@ export const day04:LessonContent & {quizId:string}={
             "hi": "Validation हटा दें।"
           }
         }
-      ],
-      "explanation": {
-        "en": "Client-side checks improve UX; the server remains the authority for validation and authorization.",
-        "hi": "Client-side checks UX सुधारते हैं; validation और authorization के लिए server authoritative रहता है।"
-      }
+      ]
     },
     {
       "id": "60000000-0000-4000-8000-000000000043",
@@ -195,11 +187,7 @@ export const day04:LessonContent & {quizId:string}={
             "hi": "Labels और instructions हटा दें।"
           }
         }
-      ],
-      "explanation": {
-        "en": "Meaningful text and programmatic relationships help keyboard and assistive-technology users.",
-        "hi": "Meaningful text और programmatic relationships keyboard तथा assistive-technology users की मदद करते हैं।"
-      }
+      ]
     },
     {
       "id": "60000000-0000-4000-8000-000000000044",
@@ -229,11 +217,7 @@ export const day04:LessonContent & {quizId:string}={
             "hi": "Testing छोड़ दें।"
           }
         }
-      ],
-      "explanation": {
-        "en": "Practice plus inspection reveals mistakes and builds transferable skills.",
-        "hi": "Practice और inspection mistakes दिखाते हैं और transferable skills बनाते हैं।"
-      }
+      ]
     }
   ],
   "assignment": {
