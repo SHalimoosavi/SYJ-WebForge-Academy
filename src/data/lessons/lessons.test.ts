@@ -38,6 +38,7 @@ describe('Days 1–5 published learning content',()=>{
     expect(question.prompt.hi.length).toBeGreaterThan(10);
     expect(question.options).toHaveLength(3);
     expect('correctOptionId' in question).toBe(false);
+    expect('explanation' in question).toBe(false);
    }
   }
  });
