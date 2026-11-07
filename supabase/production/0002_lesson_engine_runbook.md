@@ -22,7 +22,7 @@
 3. Supply the 20 correct option IDs and bilingual explanations through a protected secret named `SYJ_LESSON_ANSWER_KEYS_JSON`, then run `node scripts/seed-lesson-answer-keys.mjs` against the approved database connection. Never place the JSON payload in Git, frontend source, CI logs or shell history.
 4. Verify exactly 40 legacy lessons remain, their IDs are unchanged, all course/track mappings exist, and pre-existing `lesson_progress` rows are unchanged.
 5. Verify the five quizzes, twenty questions and twenty private answer keys exist.
-6. Verify `anon` and `authenticated` cannot select `private.quiz_answer_keys`; authenticated users cannot directly insert quiz attempts or change profile role; RPC execution is limited to authenticated users.
+6. Verify `anon` and `authenticated` cannot select `lesson_private.quiz_answer_keys`; authenticated users cannot directly insert quiz attempts or change profile role; RPC execution is limited to authenticated users.
 7. Run a two-user RLS smoke test, quiz pass/fail test, hourly rate-limit test and capacity-one concurrent enrolment test.
 8. Enable the lesson UI only after all checks pass. Monitor database errors, quiz submission failures and rate-limit rejections.
 
