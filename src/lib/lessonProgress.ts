@@ -49,6 +49,6 @@ export async function saveExercise(lessonId:string,exerciseKey:string,submission
  if(sessionError)throw sessionError;
  const user=sessionData.session?.user;
  if(!user)throw new Error('Sign in before saving an exercise.');
- const {error}=await supabase.from('exercise_results').upsert({learner_id:user.id,lesson_id:lessonId,exercise_key:exerciseKey,status:'submitted',submission_text:submission},{onConflict:'learner_id,lesson_id,exercise_key'});
+ const {error}=await supabase.from('exercise_results').upsert({learner_id:user.id,lesson_id:lessonId,exercise_key:exerciseKey,submission_text:submission},{onConflict:'learner_id,lesson_id,exercise_key'});
  if(error)throw error;
 }
