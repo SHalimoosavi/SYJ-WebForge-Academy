@@ -31,6 +31,8 @@ begin
   if has_table_privilege('authenticated','public.quiz_attempts','insert') then raise exception 'authenticated unexpectedly has quiz_attempts INSERT'; end if;
   if has_table_privilege('authenticated','private.quiz_answer_keys','select') then raise exception 'authenticated unexpectedly has answer-key SELECT'; end if;
   if has_table_privilege('anon','private.quiz_answer_keys','select') then raise exception 'anon unexpectedly has answer-key SELECT'; end if;
+  if has_table_privilege('anon','public.quiz_attempts','select') then raise exception 'anon unexpectedly has quiz_attempts SELECT'; end if;
+  if has_table_privilege('anon','public.exercise_results','select') then raise exception 'anon unexpectedly has exercise_results SELECT'; end if;
   if has_column_privilege('authenticated','public.profiles','role','update') then raise exception 'authenticated unexpectedly can update profile role'; end if;
 end $$;
 
@@ -46,6 +48,13 @@ declare n integer;
 begin
   select count(*) into n from public.quiz_attempts where learner_id='10000000-0000-4000-8000-000000000002';
   if n<>0 then raise exception 'Learner can read another learner attempt'; end if;
+  select count(*) into n from public.lesson_progress where learner_id='10000000-0000-4000-8000-000000000002';
+  if n<>0 then raise exception 'Learner can read another learner progress'; end if;
+  begin
+    update public.profiles set role='admin' where id=auth.uid();
+    raise exception 'Role self-promotion UPDATE unexpectedly succeeded';
+  exception when insufficient_privilege then null;
+  end;
   begin
     insert into public.quiz_attempts(learner_id,quiz_id,score,max_score,passed,answers)
     values(auth.uid(),'20000000-0000-4000-8000-000000000001',100,100,true,'[]');
@@ -63,6 +72,21 @@ begin
   exception when insufficient_privilege then null;
   end;
 end $$;
+
+-- Legacy progress must remain intact after the new schema is applied.
+reset role;
+do $
+begin
+  if not exists(select 1 from public.lesson_progress lp join public.lessons l on l.id=lp.lesson_id
+    where lp.learner_id='10000000-0000-4000-8000-000000000001' and l.day_number=1 and lp.completed) then
+    raise exception 'Pre-existing learner progress was not preserved';
+  end if;
+  if (select count(*) from public.lessons where day_number between 1 and 40)<>40 then
+    raise exception 'Existing 40-day lesson catalogue was not preserved';
+  end if;
+end $;
+set role authenticated;
+select set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000001',false);
 
 -- RPC submission returns computed score and post-submission explanations.
 select public.submit_quiz_attempt(
