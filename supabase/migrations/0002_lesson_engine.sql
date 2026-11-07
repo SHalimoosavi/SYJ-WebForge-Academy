@@ -147,7 +147,7 @@ grant update(full_name,preferred_language) on public.profiles to authenticated;
 revoke all on function public.current_role() from public, anon;
 revoke all on function public.is_batch_trainer(uuid) from public, anon;
 revoke all on function public.is_batch_member(uuid) from public, anon;
-grant execute on function public.current_role() to authenticated;
+grant execute on function public.current_role() to anon, authenticated;
 grant execute on function public.is_batch_trainer(uuid) to authenticated;
 grant execute on function public.is_batch_member(uuid) to authenticated;
 revoke all on function public.handle_new_user() from public, anon, authenticated;
@@ -239,13 +239,12 @@ grant execute on function public.mark_lesson_complete(uuid) to authenticated;
 grant select on public.courses,public.course_tracks,public.quizzes,public.quiz_questions to anon,authenticated;
 grant select on public.quiz_attempts to authenticated;
 grant select,insert,update on public.exercise_results to authenticated;
-grant select on public.learner_course_progress to authenticated;
-
 create or replace view public.learner_course_progress with (security_invoker=true) as
 select lp.learner_id,l.course_id,count(*) filter(where lp.completed) as completed_lessons,count(*) as started_lessons,
  count(*) filter(where lp.completed)::numeric/nullif(count(*),0)::numeric as completion_ratio,
  max(lp.completed_at) filter(where lp.completed) as last_completed_at
 from public.lesson_progress lp join public.lessons l on l.id=lp.lesson_id
 where l.course_id is not null group by lp.learner_id,l.course_id;
+grant select on public.learner_course_progress to authenticated;
 
 commit;
