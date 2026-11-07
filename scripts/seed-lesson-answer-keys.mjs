@@ -14,28 +14,9 @@ if(!Array.isArray(entries)||entries.length!==20){
   process.exit(2);
 }
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const EXPECTED_QUESTION_IDS = new Set([
-  '0000000060000000-0000-4000-8000-000000000011',
-  '0000000060000000-0000-4000-8000-000000000012',
-  '0000000060000000-0000-4000-8000-000000000013',
-  '0000000060000000-0000-4000-8000-000000000014',
-  '0000000060000000-0000-4000-8000-000000000021',
-  '0000000060000000-0000-4000-8000-000000000022',
-  '0000000060000000-0000-4000-8000-000000000023',
-  '0000000060000000-0000-4000-8000-000000000024',
-  '0000000060000000-0000-4000-8000-000000000031',
-  '0000000060000000-0000-4000-8000-000000000032',
-  '0000000060000000-0000-4000-8000-000000000033',
-  '0000000060000000-0000-4000-8000-000000000034',
-  '0000000060000000-0000-4000-8000-000000000041',
-  '0000000060000000-0000-4000-8000-000000000042',
-  '0000000060000000-0000-4000-8000-000000000043',
-  '0000000060000000-0000-4000-8000-000000000044',
-  '0000000060000000-0000-4000-8000-000000000051',
-  '0000000060000000-0000-4000-8000-000000000052',
-  '0000000060000000-0000-4000-8000-000000000053',
-  '0000000060000000-0000-4000-8000-000000000054'
-]);
+import {EXPECTED_QUESTION_IDS} from './quiz-question-ids.mjs';
+const EXPECTED_QUESTION_ID_SET = new Set(EXPECTED_QUESTION_IDS);
+
 const seen=new Set();
 function quote(value){return "'"+String(value).replace(/'/g,"''")+"'";}
 for(const row of entries){
@@ -43,11 +24,11 @@ for(const row of entries){
   console.error('An answer-key entry has an invalid shape or field length.');
   process.exit(2);
  }
- if(!EXPECTED_QUESTION_IDS.has(row.question_id)){console.error('Unexpected question ID in answer-key secret.');process.exit(2);}
+ if(!EXPECTED_QUESTION_ID_SET.has(row.question_id)){console.error('Unexpected question ID in answer-key secret.');process.exit(2);}
  if(seen.has(row.question_id)){console.error('Duplicate question ID in answer-key secret.');process.exit(2);}
  seen.add(row.question_id);
 }
-if(seen.size!==EXPECTED_QUESTION_IDS.size||[...EXPECTED_QUESTION_IDS].some(id=>!seen.has(id))){console.error('Answer-key input must contain exactly the 20 published Day 1–5 question IDs.');process.exit(2);}
+if(seen.size!==EXPECTED_QUESTION_ID_SET.size||[...EXPECTED_QUESTION_ID_SET].some(id=>!seen.has(id))){console.error('Answer-key input must contain exactly the 20 published Day 1–5 question IDs.');process.exit(2);}
 const values=entries.map(row=>`(${quote(row.question_id)}::uuid,${quote(row.correct_option_id)},${quote(row.explanation_en)},${quote(row.explanation_hi)})`).join(',\n');
 const sql=`begin;
 do $guard$
