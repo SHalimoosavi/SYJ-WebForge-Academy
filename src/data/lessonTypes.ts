@@ -1,5 +1,5 @@
 export type LessonSection = { id:string; title:{en:string;hi:string}; body:{en:string;hi:string}; code?:string; output?:string; note?:{en:string;hi:string} };
-export type QuizQuestion = { id:string; prompt:{en:string;hi:string}; options:{id:string;label:{en:string;hi:string}}[]; correctOptionId:string; explanation:{en:string;hi:string} };
+export type QuizQuestion = { id:string; prompt:{en:string;hi:string}; options:{id:string;label:{en:string;hi:string}}[];  explanation:{en:string;hi:string} };
 export type LessonContent = {
  day:number; slug:string; title:{en:string;hi:string}; summary:{en:string;hi:string};
  objectives:{en:string[];hi:string[]}; prerequisites:{en:string[];hi:string[]};
