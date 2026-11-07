@@ -102,17 +102,10 @@ export const day03:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000031",
       "prompt": {
-        "en": "Which element should contain a hyperlink's destination address?",
-        "hi": "Hyperlink का destination address किस element में होना चाहिए?"
+        "en": "Which attribute should contain a hyperlink's destination address?",
+        "hi": "Hyperlink का destination address किस attribute में होना चाहिए?"
       },
       "options": [
-        {
-          "id": "a",
-          "label": {
-            "en": "The href attribute on an a element",
-            "hi": "a element के href attribute में"
-          }
-        },
         {
           "id": "b",
           "label": {
@@ -132,6 +125,13 @@ export const day03:LessonContent & {quizId:string}={
           "label": {
             "en": "The action attribute on a heading",
             "hi": "heading के action attribute में"
+          }
+        },
+        {
+          "id": "a",
+          "label": {
+            "en": "The href attribute on an a element",
+            "hi": "a element के href attribute में"
           }
         }
       ]
@@ -218,6 +218,13 @@ export const day03:LessonContent & {quizId:string}={
       },
       "options": [
         {
+          "id": "d",
+          "label": {
+            "en": "<strong>important</strong>",
+            "hi": "<strong>important</strong>"
+          }
+        },
+        {
           "id": "a",
           "label": {
             "en": "<small>important</small>",
@@ -236,13 +243,6 @@ export const day03:LessonContent & {quizId:string}={
           "label": {
             "en": "<i>important</i>",
             "hi": "<i>important</i>"
-          }
-        },
-        {
-          "id": "d",
-          "label": {
-            "en": "<strong>important</strong>",
-            "hi": "<strong>important</strong>"
           }
         }
       ]

@@ -114,17 +114,17 @@ export const day05:LessonContent & {quizId:string}={
           }
         },
         {
-          "id": "b",
-          "label": {
-            "en": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">",
-            "hi": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">"
-          }
-        },
-        {
           "id": "c",
           "label": {
             "en": "<input type=\"email\" label=\"Email\">",
             "hi": "<input type=\"email\" label=\"Email\">"
+          }
+        },
+        {
+          "id": "b",
+          "label": {
+            "en": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">",
+            "hi": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">"
           }
         },
         {
@@ -143,13 +143,6 @@ export const day05:LessonContent & {quizId:string}={
         "hi": "जब required email input खाली हो और user सामान्य browser-validated form submit करे, तो क्या होता है?"
       },
       "options": [
-        {
-          "id": "a",
-          "label": {
-            "en": "The browser normally blocks submission and reports a constraint validation error.",
-            "hi": "Browser सामान्यतः submission रोकता है और constraint validation error दिखाता है।"
-          }
-        },
         {
           "id": "b",
           "label": {
@@ -170,6 +163,13 @@ export const day05:LessonContent & {quizId:string}={
             "en": "The browser submits the form and marks the field as valid.",
             "hi": "Browser form submit करके field को valid मान लेता है।"
           }
+        },
+        {
+          "id": "a",
+          "label": {
+            "en": "The browser normally blocks submission and reports a constraint validation error.",
+            "hi": "Browser सामान्यतः submission रोकता है और constraint validation error दिखाता है।"
+          }
         }
       ]
     },
@@ -180,6 +180,13 @@ export const day05:LessonContent & {quizId:string}={
         "hi": "Related radio buttons के group को shared accessible caption चाहिए। कौन-से elements group को wrap करें?"
       },
       "options": [
+        {
+          "id": "c",
+          "label": {
+            "en": "fieldset and legend",
+            "hi": "fieldset और legend"
+          }
+        },
         {
           "id": "a",
           "label": {
@@ -192,13 +199,6 @@ export const day05:LessonContent & {quizId:string}={
           "label": {
             "en": "div and span",
             "hi": "div और span"
-          }
-        },
-        {
-          "id": "c",
-          "label": {
-            "en": "fieldset and legend",
-            "hi": "fieldset और legend"
           }
         },
         {
@@ -225,6 +225,13 @@ export const day05:LessonContent & {quizId:string}={
           }
         },
         {
+          "id": "d",
+          "label": {
+            "en": "GET, because form data is placed in the URL query string",
+            "hi": "GET, क्योंकि form data URL query string में जाता है"
+          }
+        },
+        {
           "id": "b",
           "label": {
             "en": "PUT, because browsers require it for all forms",
@@ -236,13 +243,6 @@ export const day05:LessonContent & {quizId:string}={
           "label": {
             "en": "PATCH, because search modifies the server",
             "hi": "PATCH, क्योंकि search server को बदलता है"
-          }
-        },
-        {
-          "id": "d",
-          "label": {
-            "en": "GET, because form data is placed in the URL query string",
-            "hi": "GET, क्योंकि form data URL query string में जाता है"
           }
         }
       ]

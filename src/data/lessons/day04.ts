@@ -107,17 +107,17 @@ export const day04:LessonContent & {quizId:string}={
       },
       "options": [
         {
-          "id": "a",
-          "label": {
-            "en": "title",
-            "hi": "title"
-          }
-        },
-        {
           "id": "b",
           "label": {
             "en": "alt",
             "hi": "alt"
+          }
+        },
+        {
+          "id": "a",
+          "label": {
+            "en": "title",
+            "hi": "title"
           }
         },
         {
@@ -139,36 +139,36 @@ export const day04:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000042",
       "prompt": {
-        "en": "What does this element do? <img src=\"map.png\" alt=\"Map showing the campus entrance\">",
-        "hi": "यह element क्या करता है? <img src=\"map.png\" alt=\"Map showing the campus entrance\">"
+        "en": "Which markup gives a browser native playback controls for an audio file?",
+        "hi": "Audio file के लिए browser के native playback controls कौन-सा markup देता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Creates a clickable link to map.png",
-            "hi": "map.png के लिए clickable link बनाता है"
+            "en": "<img controls src=\"sound.mp3\">",
+            "hi": "<img controls src=\"sound.mp3\">"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Plays map.png as an audio file",
-            "hi": "map.png को audio file की तरह चलाता है"
+            "en": "<video controls src=\"sound.mp3\"></video>",
+            "hi": "<video controls src=\"sound.mp3\"></video>"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Embeds an image and provides its text alternative",
-            "hi": "Image embed करता है और उसका text alternative देता है"
+            "en": "<audio controls src=\"sound.mp3\"></audio>",
+            "hi": "<audio controls src=\"sound.mp3\"></audio>"
           }
         },
         {
           "id": "d",
           "label": {
-            "en": "Creates a video player with captions",
-            "hi": "Captions वाला video player बनाता है"
+            "en": "<source controls src=\"sound.mp3\">",
+            "hi": "<source controls src=\"sound.mp3\">"
           }
         }
       ]
@@ -181,13 +181,6 @@ export const day04:LessonContent & {quizId:string}={
       },
       "options": [
         {
-          "id": "a",
-          "label": {
-            "en": "alt=\"\"",
-            "hi": "alt=\"\""
-          }
-        },
-        {
           "id": "b",
           "label": {
             "en": "alt=\"decorative divider image\"",
@@ -195,10 +188,17 @@ export const day04:LessonContent & {quizId:string}={
           }
         },
         {
+          "id": "a",
+          "label": {
+            "en": "alt=\"\"",
+            "hi": "alt=\"\""
+          }
+        },
+        {
           "id": "c",
           "label": {
-            "en": "Remove the img element",
-            "hi": "img element हटा दें"
+            "en": "alt=\"divider.png\"",
+            "hi": "alt=\"divider.png\""
           }
         },
         {

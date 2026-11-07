@@ -107,13 +107,6 @@ export const day01:LessonContent & {quizId:string}={
       },
       "options": [
         {
-          "id": "a",
-          "label": {
-            "en": "The Internet connects networks; the Web is a service of linked resources that uses it.",
-            "hi": "Internet networks को जोड़ता है; Web उस पर चलने वाली linked resources की service है।"
-          }
-        },
-        {
           "id": "b",
           "label": {
             "en": "The Web connects routers; the Internet is a collection of web pages.",
@@ -125,6 +118,13 @@ export const day01:LessonContent & {quizId:string}={
           "label": {
             "en": "The Internet only carries email; the Web carries every other kind of data.",
             "hi": "Internet केवल email ले जाता है; Web बाकी सभी तरह का data ले जाता है।"
+          }
+        },
+        {
+          "id": "a",
+          "label": {
+            "en": "The Internet connects networks; the Web is a service of linked resources that uses it.",
+            "hi": "Internet networks को जोड़ता है; Web उस पर चलने वाली linked resources की service है।"
           }
         },
         {
@@ -143,6 +143,13 @@ export const day01:LessonContent & {quizId:string}={
         "hi": "Browser https://learn.example/courses/html?level=beginner#forms खोलता है। इसमें fragment कौन-सा हिस्सा है?"
       },
       "options": [
+        {
+          "id": "d",
+          "label": {
+            "en": "forms",
+            "hi": "forms"
+          }
+        },
         {
           "id": "a",
           "label": {
@@ -163,13 +170,6 @@ export const day01:LessonContent & {quizId:string}={
             "en": "level=beginner",
             "hi": "level=beginner"
           }
-        },
-        {
-          "id": "d",
-          "label": {
-            "en": "forms",
-            "hi": "forms"
-          }
         }
       ]
     },
@@ -188,13 +188,6 @@ export const day01:LessonContent & {quizId:string}={
           }
         },
         {
-          "id": "b",
-          "label": {
-            "en": "It parses the HTML and requests linked resources such as CSS, scripts and images.",
-            "hi": "वह HTML parse करता है और CSS, scripts तथा images जैसे linked resources माँगता है।"
-          }
-        },
-        {
           "id": "c",
           "label": {
             "en": "It sends the HTML to DNS to translate it into an IP address.",
@@ -206,6 +199,13 @@ export const day01:LessonContent & {quizId:string}={
           "label": {
             "en": "It changes the server's HTTP status code to 200.",
             "hi": "वह server का HTTP status code 200 कर देता है।"
+          }
+        },
+        {
+          "id": "b",
+          "label": {
+            "en": "It parses the HTML and requests linked resources such as CSS, scripts and images.",
+            "hi": "वह HTML parse करता है और CSS, scripts तथा images जैसे linked resources माँगता है।"
           }
         }
       ]
@@ -225,17 +225,17 @@ export const day01:LessonContent & {quizId:string}={
           }
         },
         {
-          "id": "b",
-          "label": {
-            "en": "The browser must sign in before continuing.",
-            "hi": "आगे बढ़ने से पहले browser को sign in करना होगा।"
-          }
-        },
-        {
           "id": "c",
           "label": {
             "en": "The requested resource could not be found at that URL.",
             "hi": "उस URL पर माँगा गया resource नहीं मिला।"
+          }
+        },
+        {
+          "id": "b",
+          "label": {
+            "en": "The browser must sign in before continuing.",
+            "hi": "आगे बढ़ने से पहले browser को sign in करना होगा।"
           }
         },
         {

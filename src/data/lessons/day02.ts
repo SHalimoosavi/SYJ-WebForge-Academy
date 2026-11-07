@@ -107,17 +107,17 @@ export const day02:LessonContent & {quizId:string}={
       },
       "options": [
         {
-          "id": "a",
-          "label": {
-            "en": "Inside the head element",
-            "hi": "head element के अंदर"
-          }
-        },
-        {
           "id": "b",
           "label": {
             "en": "Inside the footer element",
             "hi": "footer element के अंदर"
+          }
+        },
+        {
+          "id": "a",
+          "label": {
+            "en": "Inside the head element",
+            "hi": "head element के अंदर"
           }
         },
         {
@@ -139,36 +139,36 @@ export const day02:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000022",
       "prompt": {
-        "en": "What does this HTML snippet display as the main heading? <h1>Welcome</h1>",
-        "hi": "यह HTML snippet मुख्य heading के रूप में क्या दिखाता है? <h1>Welcome</h1>"
+        "en": "A page has one main heading and two section headings. Which heading structure expresses that hierarchy correctly?",
+        "hi": "Page में एक मुख्य heading और दो section headings हैं। कौन-सी heading structure यह hierarchy सही दिखाती है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "A browser tab title only",
-            "hi": "केवल browser tab का title"
-          }
-        },
-        {
-          "id": "b",
-          "label": {
-            "en": "A level-one heading containing Welcome",
-            "hi": "Welcome वाली level-one heading"
+            "en": "Use h1 for the page title and h2 for each section heading.",
+            "hi": "Page title के लिए h1 और हर section heading के लिए h2 इस्तेमाल करें।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "A hyperlink to a page named Welcome",
-            "hi": "Welcome नाम के page का hyperlink"
+            "en": "Use h3 for the page title and h2 for the section headings.",
+            "hi": "Page title के लिए h3 और section headings के लिए h2 इस्तेमाल करें।"
           }
         },
         {
           "id": "d",
           "label": {
-            "en": "A form input with the value Welcome",
-            "hi": "Welcome value वाला form input"
+            "en": "Use paragraph elements for all headings and style them visually.",
+            "hi": "सभी headings के लिए paragraph elements इस्तेमाल करें और उन्हें केवल style करें।"
+          }
+        },
+        {
+          "id": "b",
+          "label": {
+            "en": "Use h2 for the page title and h1 for both section headings.",
+            "hi": "Page title के लिए h2 और दोनों section headings के लिए h1 इस्तेमाल करें।"
           }
         }
       ]
@@ -181,6 +181,13 @@ export const day02:LessonContent & {quizId:string}={
       },
       "options": [
         {
+          "id": "c",
+          "label": {
+            "en": "<nav>",
+            "hi": "<nav>"
+          }
+        },
+        {
           "id": "a",
           "label": {
             "en": "<div>",
@@ -192,13 +199,6 @@ export const day02:LessonContent & {quizId:string}={
           "label": {
             "en": "<span>",
             "hi": "<span>"
-          }
-        },
-        {
-          "id": "c",
-          "label": {
-            "en": "<nav>",
-            "hi": "<nav>"
           }
         },
         {
@@ -232,17 +232,17 @@ export const day02:LessonContent & {quizId:string}={
           }
         },
         {
-          "id": "c",
-          "label": {
-            "en": "Put the language only in a CSS class.",
-            "hi": "Language केवल CSS class में लिखें।"
-          }
-        },
-        {
           "id": "d",
           "label": {
             "en": "Set a valid language tag, for example <html lang=\"en\">.",
             "hi": "एक valid language tag सेट करें, जैसे <html lang=\"en\">।"
+          }
+        },
+        {
+          "id": "c",
+          "label": {
+            "en": "Put the language only in a CSS class.",
+            "hi": "Language केवल CSS class में लिखें।"
           }
         }
       ]
