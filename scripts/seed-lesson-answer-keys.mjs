@@ -38,6 +38,8 @@ insert into private.quiz_answer_keys(question_id,correct_option_id,explanation_e
 ${values}
 on conflict(question_id) do update set correct_option_id=excluded.correct_option_id,explanation_en=excluded.explanation_en,explanation_hi=excluded.explanation_hi;
 commit;`;
-const result=spawnSync('psql',['-X','-v','ON_ERROR_STOP=1','-c',sql],{stdio:['ignore','inherit','inherit'],env:process.env});
+const result=spawnSync('psql',['-X','-v','ON_ERROR_STOP=1'],{input:sql,encoding:'utf8',env:process.env});
+if(result.stdout)process.stdout.write(result.stdout);
+if(result.stderr)process.stderr.write(result.stderr);
 if(result.error){console.error(result.error.message);process.exit(1);}
 process.exit(result.status??1);
