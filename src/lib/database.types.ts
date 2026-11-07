@@ -38,6 +38,14 @@ export type Database = {
         Args: Record<PropertyKey, never>;
         Returns: { id: string; name: string; capacity: number; status: Database["public"]["Enums"]["batch_status"]; enrolled_count: number }[];
       };
+      submit_quiz_attempt: {
+        Args: { p_quiz_id: string; p_answers: Json };
+        Returns: Json;
+      };
+      mark_lesson_complete: {
+        Args: { p_lesson_id: string };
+        Returns: boolean;
+      };
     };
     Enums: { app_role: "learner" | "trainer" | "admin"; batch_status: "upcoming" | "active" | "completed"; submission_status: "submitted" | "reviewing" | "approved" | "revision_requested" };
     CompositeTypes: { [_ in never]: never };
