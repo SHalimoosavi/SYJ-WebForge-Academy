@@ -8,7 +8,7 @@ type Route={name:'home'|'curriculum'|'lesson'|'not-found';day?:number};
 function readRoute():Route{
  const raw=window.location.hash.replace(/^#/, '')||'/';
  const path=raw.startsWith('/')?raw:'/'+raw;
- if(path==='/'||path==='/home')return {name:'home'};
+ if(['/','/home','/dashboard','/batches','/setup'].includes(path))return {name:'home'};
  if(path==='/curriculum')return {name:'curriculum'};
  const match=path.match(/^\/lesson\/(\d{1,2})$/);
  if(match){const day=Number(match[1]);if(day>=1&&day<=5)return {name:'lesson',day};}
