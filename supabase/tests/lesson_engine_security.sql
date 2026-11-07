@@ -60,6 +60,8 @@ begin
   if has_table_privilege('anon','public.quiz_attempts','select') then raise exception 'anon unexpectedly has quiz_attempts SELECT'; end if;
   if has_table_privilege('anon','public.exercise_results','select') then raise exception 'anon unexpectedly has exercise_results SELECT'; end if;
   if has_column_privilege('authenticated','public.profiles','role','update') then raise exception 'authenticated unexpectedly can update profile role'; end if;
+  if has_column_privilege('authenticated','public.exercise_results','status','update') then raise exception 'learner can self-approve exercise status'; end if;
+  if has_column_privilege('authenticated','public.exercise_results','status','insert') then raise exception 'learner can insert a forged exercise status'; end if;
 end $$;
 \echo PASS: client privileges block fake attempt writes, private answer-key reads, anon private-table reads, and profile-role updates
 
