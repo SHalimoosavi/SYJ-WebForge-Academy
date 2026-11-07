@@ -25,8 +25,17 @@ insert into lesson_private.quiz_answer_keys(question_id,correct_option_id,explan
  ('30000000-0000-4000-8000-000000000002','a','A browser requests and displays web resources.','Browser web resources का अनुरोध और प्रदर्शन करता है।')
 on conflict(question_id) do nothing;
 
+-- Confirm the public Day 1–5 quiz bank is complete without storing real keys in Git.
+do $
+begin
+  if (select count(*) from public.quizzes q join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>5 then raise exception 'Expected five Day 1–5 quizzes'; end if;
+  if (select count(*) from public.quiz_questions qq join public.quizzes q on q.id=qq.quiz_id join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>20 then raise exception 'Expected twenty Day 1–5 questions'; end if;
+  if (select count(*) from lesson_private.quiz_answer_keys k join public.quiz_questions qq on qq.id=k.question_id join public.quizzes q on q.id=qq.quiz_id join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>0 then raise exception 'Real Day 1–5 answer keys must not be present in the public test fixture'; end if;
+end $;
+\echo PASS: five public quizzes and twenty questions seeded; real answer keys remain external
+
 -- No client insert privilege and no answer-key access.
-do $$
+do $
 begin
   if has_table_privilege('authenticated','public.quiz_attempts','insert') then raise exception 'authenticated unexpectedly has quiz_attempts INSERT'; end if;
   if has_table_privilege('authenticated','lesson_private.quiz_answer_keys','select') then raise exception 'authenticated unexpectedly has answer-key SELECT'; end if;
@@ -37,7 +46,10 @@ begin
 end $$;
 \echo PASS: client privileges block fake attempt writes, private answer-key reads, anon private-table reads, and profile-role updates
 
--- A pre-existing attempt belonging to learner two must remain invisible to learner one.
+-- A pre-existing attempt and exercise result belonging to learner two must remain invisible to learner one.
+insert into public.exercise_results(learner_id,lesson_id,exercise_key,status,submission_text)
+select '10000000-0000-4000-8000-000000000002',id,'day-1-private-test','submitted','private learner response'
+from public.lessons where day_number=1;
 insert into public.quiz_attempts(learner_id,quiz_id,score,max_score,passed,answers)
 values('10000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000001',100,100,true,'[]');
 
@@ -51,6 +63,8 @@ begin
   if n<>0 then raise exception 'Learner can read another learner attempt'; end if;
   select count(*) into n from public.lesson_progress where learner_id='10000000-0000-4000-8000-000000000002';
   if n<>0 then raise exception 'Learner can read another learner progress'; end if;
+  select count(*) into n from public.exercise_results where learner_id='10000000-0000-4000-8000-000000000002';
+  if n<>0 then raise exception 'Learner can read another learner exercise result'; end if;
   begin
     update public.profiles set role='admin' where id=auth.uid();
     raise exception 'Role self-promotion UPDATE unexpectedly succeeded';
@@ -73,7 +87,7 @@ begin
   exception when insufficient_privilege then null;
   end;
 end $$;
-\echo PASS: cross-user quiz-attempt and lesson-progress RLS isolation
+\echo PASS: cross-user quiz-attempt, exercise-result and lesson-progress RLS isolation
 \echo PASS: learner role self-promotion is rejected
 \echo PASS: direct fake quiz-attempt INSERT is rejected
 \echo PASS: answer-key table is unreadable to authenticated users
