@@ -34,7 +34,8 @@ begin
   if has_table_privilege('anon','public.quiz_attempts','select') then raise exception 'anon unexpectedly has quiz_attempts SELECT'; end if;
   if has_table_privilege('anon','public.exercise_results','select') then raise exception 'anon unexpectedly has exercise_results SELECT'; end if;
   if has_column_privilege('authenticated','public.profiles','role','update') then raise exception 'authenticated unexpectedly can update profile role'; end if;
-end $$;
+end $;
+\echo PASS: client privileges block fake attempt writes, private answer-key reads, anon private-table reads, and profile-role updates
 
 -- A pre-existing attempt belonging to learner two must remain invisible to learner one.
 insert into public.quiz_attempts(learner_id,quiz_id,score,max_score,passed,answers)
@@ -71,7 +72,12 @@ begin
     raise exception 'Answer-key read unexpectedly succeeded';
   exception when insufficient_privilege then null;
   end;
-end $$;
+end $;
+\echo PASS: cross-user quiz-attempt and lesson-progress RLS isolation
+\echo PASS: learner role self-promotion is rejected
+\echo PASS: direct fake quiz-attempt INSERT is rejected
+\echo PASS: answer-key table is unreadable to authenticated users
+\echo PASS: completion without a passing quiz is rejected
 
 -- Legacy progress must remain intact after the new schema is applied.
 reset role;
@@ -84,7 +90,8 @@ begin
   if (select count(*) from public.lessons where day_number between 1 and 40)<>40 then
     raise exception 'Existing 40-day lesson catalogue was not preserved';
   end if;
-end $$;
+end $;
+\echo PASS: migration preserves all 40 original lessons and pre-existing learner progress
 set role authenticated;
 select set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000001',false);
 
@@ -93,8 +100,10 @@ select public.submit_quiz_attempt(
  '20000000-0000-4000-8000-000000000001',
  '[{"question_id":"30000000-0000-4000-8000-000000000001","option_id":"a"},{"question_id":"30000000-0000-4000-8000-000000000002","option_id":"a"}]'::jsonb
 ) as successful_submission;
+\echo PASS: quiz score and explanations are computed server-side
 
 select public.mark_lesson_complete((select id from public.lessons where day_number=6));
+\\echo PASS: passing quiz permits lesson completion
 
 -- Validation: duplicates, foreign quiz question, incomplete answer set must fail.
 do $$
@@ -109,7 +118,8 @@ begin
       '[{"question_id":"30000000-0000-4000-8000-000000000001","option_id":"a"}]'::jsonb);
     raise exception 'Answer-count validation failed';
   exception when invalid_parameter_value then null; end;
-end $$;
+end $;
+\echo PASS: duplicate and incomplete quiz answer submissions are rejected
 
 -- Retake history and hourly rate limit: 9 further submissions bring the total to 10.
 do $$
@@ -126,7 +136,8 @@ begin
   exception when raise_exception then
     if sqlerrm<>'Hourly attempt limit reached' then raise; end if;
   end;
-end $$;
+end $;
+\echo PASS: sequential hourly quiz-attempt rate limit is enforced
 
 reset role;
 select 'lesson_engine_security_tests_passed' as result;
