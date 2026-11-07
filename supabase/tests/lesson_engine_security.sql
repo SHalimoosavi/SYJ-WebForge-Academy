@@ -20,7 +20,7 @@ insert into public.quiz_questions(id,quiz_id,position,prompt_en,prompt_hi,option
  ('30000000-0000-4000-8000-000000000001','20000000-0000-4000-8000-000000000001',1,'Which identifies a resource on the web?','वेब पर resource की पहचान क्या करता है?','[{"id":"a","label":"URL"},{"id":"b","label":"CSS"}]'),
  ('30000000-0000-4000-8000-000000000002','20000000-0000-4000-8000-000000000001',2,'Which requests a web page?','वेब पेज का अनुरोध कौन करता है?','[{"id":"a","label":"Browser"},{"id":"b","label":"Database"}]')
 on conflict(id) do nothing;
-insert into private.quiz_answer_keys(question_id,correct_option_id,explanation_en,explanation_hi) values
+insert into lesson_private.quiz_answer_keys(question_id,correct_option_id,explanation_en,explanation_hi) values
  ('30000000-0000-4000-8000-000000000001','a','A URL identifies a resource location.','URL resource का पता बताता है।'),
  ('30000000-0000-4000-8000-000000000002','a','A browser requests and displays web resources.','Browser web resources का अनुरोध और प्रदर्शन करता है।')
 on conflict(question_id) do nothing;
@@ -29,8 +29,8 @@ on conflict(question_id) do nothing;
 do $$
 begin
   if has_table_privilege('authenticated','public.quiz_attempts','insert') then raise exception 'authenticated unexpectedly has quiz_attempts INSERT'; end if;
-  if has_table_privilege('authenticated','private.quiz_answer_keys','select') then raise exception 'authenticated unexpectedly has answer-key SELECT'; end if;
-  if has_table_privilege('anon','private.quiz_answer_keys','select') then raise exception 'anon unexpectedly has answer-key SELECT'; end if;
+  if has_table_privilege('authenticated','lesson_private.quiz_answer_keys','select') then raise exception 'authenticated unexpectedly has answer-key SELECT'; end if;
+  if has_table_privilege('anon','lesson_private.quiz_answer_keys','select') then raise exception 'anon unexpectedly has answer-key SELECT'; end if;
   if has_table_privilege('anon','public.quiz_attempts','select') then raise exception 'anon unexpectedly has quiz_attempts SELECT'; end if;
   if has_table_privilege('anon','public.exercise_results','select') then raise exception 'anon unexpectedly has exercise_results SELECT'; end if;
   if has_column_privilege('authenticated','public.profiles','role','update') then raise exception 'authenticated unexpectedly can update profile role'; end if;
@@ -68,7 +68,7 @@ begin
   exception when insufficient_privilege then null;
   end;
   begin
-    perform private.quiz_answer_keys.question_id from private.quiz_answer_keys;
+    perform lesson_private.quiz_answer_keys.question_id from lesson_private.quiz_answer_keys;
     raise exception 'Answer-key read unexpectedly succeeded';
   exception when insufficient_privilege then null;
   end;
