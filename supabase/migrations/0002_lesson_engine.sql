@@ -113,7 +113,7 @@ create table public.exercise_results (
   learner_id uuid not null references public.profiles(id) on delete cascade,
   lesson_id uuid not null references public.lessons(id) on delete cascade,
   exercise_key text not null check(exercise_key ~ '^[a-z0-9]+([_-][a-z0-9]+)*$' and length(exercise_key) between 2 and 100),
-  status text not null check(status in ('started','submitted','passed','needs_revision')),
+  status text not null default 'submitted' check(status in ('started','submitted','passed','needs_revision')),
   submission_text text not null default '' check(length(submission_text) <= 20000),
   submission_url text check(submission_url is null or (length(submission_url)<=2048 and submission_url ~* '^https://[^[:space:]]+$')),
   feedback text not null default '' check(length(feedback)<=5000),
@@ -248,7 +248,9 @@ grant execute on function public.mark_lesson_complete(uuid) to authenticated;
 
 grant select on public.courses,public.course_tracks,public.quizzes,public.quiz_questions to anon,authenticated;
 grant select on public.quiz_attempts to authenticated;
-grant select,insert,update on public.exercise_results to authenticated;
+grant select on public.exercise_results to authenticated;
+grant insert(learner_id,lesson_id,exercise_key,submission_text,submission_url) on public.exercise_results to authenticated;
+grant update(submission_text,submission_url) on public.exercise_results to authenticated;
 create or replace view public.learner_course_progress with (security_invoker=true) as
 select lp.learner_id,l.course_id,count(*) filter(where lp.completed) as completed_lessons,count(*) as started_lessons,
  count(*) filter(where lp.completed)::numeric/nullif(count(*),0)::numeric as completion_ratio,
