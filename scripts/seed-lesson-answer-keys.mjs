@@ -34,7 +34,7 @@ begin
  end if;
 end
 $guard$;
-insert into private.quiz_answer_keys(question_id,correct_option_id,explanation_en,explanation_hi) values
+insert into lesson_private.quiz_answer_keys(question_id,correct_option_id,explanation_en,explanation_hi) values
 ${values}
 on conflict(question_id) do update set correct_option_id=excluded.correct_option_id,explanation_en=excluded.explanation_en,explanation_hi=excluded.explanation_hi;
 commit;`;
