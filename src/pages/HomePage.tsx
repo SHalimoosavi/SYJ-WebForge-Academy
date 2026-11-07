@@ -2,8 +2,8 @@ import {useEffect,useMemo,useState} from 'react';
 import type {FormEvent} from 'react';
 import {ArrowRight,BookOpen,CheckCircle2,Code2,Globe2,LogOut,Menu,ShieldCheck,Users,X} from 'lucide-react';
 import type {Session} from '@supabase/supabase-js';
-import {curriculum} from './data/curriculum';
-import {isSupabaseConfigured,supabase} from './lib/supabase';
+import {curriculum} from '../data/curriculum';
+import {isSupabaseConfigured,supabase} from '../lib/supabase';
 
 type Lang='en'|'hi';
 type Profile={id:string;full_name:string;role:'learner'|'trainer'|'admin';preferred_language:Lang};
