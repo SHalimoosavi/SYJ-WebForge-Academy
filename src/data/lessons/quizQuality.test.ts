@@ -11,3 +11,19 @@ describe('Days 1–5 quiz data',()=>{
  it('does not expose answers or explanations in public question data',()=>{for(const d of lessons)for(const q of d.quiz){expect('correctOptionId' in q).toBe(false);expect('explanation' in q).toBe(false);}});
  it('preserves the agreed applied-question revisions',()=>{expect(day02.quiz[1].prompt.en).toContain('one main heading');expect(day03.quiz[0].prompt.en).toMatch(/^Which attribute/);expect(day04.quiz[1].prompt.en).toContain('audio file');expect(day04.quiz[2].options.find(o=>o.id==='c')?.label.en).toBe('alt="divider.png"');});
 });
+
+const correctOptionIds=['a','d','b','c','a','b','c','d','a','b','c','d','b','c','a','d','b','a','c','d'];
+const displayPatterns=lessons.map((day,dayIndex)=>day.quiz.map((q,questionIndex)=>{
+ const optionId=correctOptionIds[dayIndex*4+questionIndex];
+ const position=q.options.findIndex(option=>option.id===optionId);
+ expect(position, `correct option ID missing for ${q.id}`).toBeGreaterThanOrEqual(0);
+ return 'ABCD'[position];
+}).join(''));
+describe('answer display-order quality (public option data only)',()=>{
+ it('has no A-B-C-D run within any day',()=>{for(const pattern of displayPatterns)expect(pattern).not.toContain('ABCD');});
+ it('uses a distinct correct-answer letter pattern for every day',()=>{expect(new Set(displayPatterns).size).toBe(5);});
+ it('preserves the approved per-question option-ID display order',()=>{
+  const expected=[['b','c','a','d'],['b','d','c','a'],['d','b','c','a'],['b','a','c','d'],['c','d','a','b']];
+  for(let d=0;d<5;d++)expect(lessons[d].quiz.map(q=>q.options.map(o=>o.id))).toEqual(expected[d]);
+ });
+});
