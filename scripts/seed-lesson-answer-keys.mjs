@@ -1,4 +1,6 @@
 import {spawnSync} from 'node:child_process';
+import {console} from 'node:console';
+import process from 'node:process';
 
 const raw=process.env.SYJ_LESSON_ANSWER_KEYS_JSON;
 if(!raw){
