@@ -14,6 +14,28 @@ if(!Array.isArray(entries)||entries.length!==20){
   process.exit(2);
 }
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const EXPECTED_QUESTION_IDS = new Set([
+  '0000000060000000-0000-4000-8000-0101',
+  '0000000060000000-0000-4000-8000-0102',
+  '0000000060000000-0000-4000-8000-0103',
+  '0000000060000000-0000-4000-8000-0104',
+  '0000000060000000-0000-4000-8000-0201',
+  '0000000060000000-0000-4000-8000-0202',
+  '0000000060000000-0000-4000-8000-0203',
+  '0000000060000000-0000-4000-8000-0204',
+  '0000000060000000-0000-4000-8000-0301',
+  '0000000060000000-0000-4000-8000-0302',
+  '0000000060000000-0000-4000-8000-0303',
+  '0000000060000000-0000-4000-8000-0304',
+  '0000000060000000-0000-4000-8000-0401',
+  '0000000060000000-0000-4000-8000-0402',
+  '0000000060000000-0000-4000-8000-0403',
+  '0000000060000000-0000-4000-8000-0404',
+  '0000000060000000-0000-4000-8000-0501',
+  '0000000060000000-0000-4000-8000-0502',
+  '0000000060000000-0000-4000-8000-0503',
+  '0000000060000000-0000-4000-8000-0504'
+]);
 const seen=new Set();
 function quote(value){return "'"+String(value).replace(/'/g,"''")+"'";}
 for(const row of entries){
@@ -21,9 +43,11 @@ for(const row of entries){
   console.error('An answer-key entry has an invalid shape or field length.');
   process.exit(2);
  }
+ if(!EXPECTED_QUESTION_IDS.has(row.question_id)){console.error('Unexpected question ID in answer-key secret.');process.exit(2);}
  if(seen.has(row.question_id)){console.error('Duplicate question ID in answer-key secret.');process.exit(2);}
  seen.add(row.question_id);
 }
+if(seen.size!==EXPECTED_QUESTION_IDS.size||[...EXPECTED_QUESTION_IDS].some(id=>!seen.has(id))){console.error('Answer-key input must contain exactly the 20 published Day 1–5 question IDs.');process.exit(2);}
 const values=entries.map(row=>`(${quote(row.question_id)}::uuid,${quote(row.correct_option_id)},${quote(row.explanation_en)},${quote(row.explanation_hi)})`).join(',\n');
 const sql=`begin;
 do $guard$
