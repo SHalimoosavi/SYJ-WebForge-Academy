@@ -1,5 +1,5 @@
 import type {LessonContent} from '../lessonTypes';
-export const day04:LessonContent={
+export const day04:LessonContent & {quizId:string}={
   "day": 4,
   "slug": "images-audio-video",
   "title": {
@@ -100,7 +100,7 @@ export const day04:LessonContent={
   },
   "quiz": [
     {
-      "id": "d4-q1",
+      "id": "60000000-0000-4000-8000-000000000041",
       "prompt": {
         "en": "Which statement best describes the main concept in this lesson?",
         "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
@@ -128,14 +128,13 @@ export const day04:LessonContent={
           }
         }
       ],
-      "correctOptionId": "a",
       "explanation": {
         "en": "Web standards and semantics make content more reliable, understandable and accessible.",
         "hi": "Web standards और semantics content को reliable, understandable और accessible बनाते हैं।"
       }
     },
     {
-      "id": "d4-q2",
+      "id": "60000000-0000-4000-8000-000000000042",
       "prompt": {
         "en": "What should you do when a browser-side check can be bypassed?",
         "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
@@ -163,14 +162,13 @@ export const day04:LessonContent={
           }
         }
       ],
-      "correctOptionId": "b",
       "explanation": {
         "en": "Client-side checks improve UX; the server remains the authority for validation and authorization.",
         "hi": "Client-side checks UX सुधारते हैं; validation और authorization के लिए server authoritative रहता है।"
       }
     },
     {
-      "id": "d4-q3",
+      "id": "60000000-0000-4000-8000-000000000043",
       "prompt": {
         "en": "Which practice improves accessibility?",
         "hi": "कौन-सी practice accessibility सुधारती है?"
@@ -198,14 +196,13 @@ export const day04:LessonContent={
           }
         }
       ],
-      "correctOptionId": "a",
       "explanation": {
         "en": "Meaningful text and programmatic relationships help keyboard and assistive-technology users.",
         "hi": "Meaningful text और programmatic relationships keyboard तथा assistive-technology users की मदद करते हैं।"
       }
     },
     {
-      "id": "d4-q4",
+      "id": "60000000-0000-4000-8000-000000000044",
       "prompt": {
         "en": "What is the best way to check your understanding?",
         "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
@@ -233,7 +230,6 @@ export const day04:LessonContent={
           }
         }
       ],
-      "correctOptionId": "a",
       "explanation": {
         "en": "Practice plus inspection reveals mistakes and builds transferable skills.",
         "hi": "Practice और inspection mistakes दिखाते हैं और transferable skills बनाते हैं।"
@@ -277,5 +273,6 @@ export const day04:LessonContent={
       "Quiz में कम से कम 70% score करें।",
       "Mini assignment review के लिए submit करें।"
     ]
-  }
+  },
+  "quizId": "50000000-0000-4000-8000-000000000004"
 };
