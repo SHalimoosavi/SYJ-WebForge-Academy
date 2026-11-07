@@ -61,6 +61,7 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - run: node --check scripts/seed-lesson-answer-keys.mjs
       - run: npm run typecheck
       - run: npm run lint
       - run: npm test
