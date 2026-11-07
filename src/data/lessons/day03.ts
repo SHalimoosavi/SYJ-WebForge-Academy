@@ -102,29 +102,36 @@ export const day03:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000031",
       "prompt": {
-        "en": "Which statement best describes the main concept in this lesson?",
-        "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
+        "en": "Which element should contain a hyperlink's destination address?",
+        "hi": "Hyperlink का destination address किस element में होना चाहिए?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use the semantic, standards-based approach taught in the lesson.",
-            "hi": "Lesson में सिखाया गया semantic और standards-based तरीका अपनाएं।"
+            "en": "The href attribute on an a element",
+            "hi": "a element के href attribute में"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Choose elements only for their default visual appearance.",
-            "hi": "Elements केवल उनके default visual look के आधार पर चुनें।"
+            "en": "The src attribute on a p element",
+            "hi": "p element के src attribute में"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip browser behavior and rely only on styling.",
-            "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
+            "en": "The alt attribute on a link element",
+            "hi": "link element के alt attribute में"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "The action attribute on a heading",
+            "hi": "heading के action attribute में"
           }
         }
       ]
@@ -132,29 +139,36 @@ export const day03:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000032",
       "prompt": {
-        "en": "What should you do when a browser-side check can be bypassed?",
-        "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
+        "en": "What is the browser's default meaning of <ol><li>Tea</li><li>Coffee</li></ol>?",
+        "hi": "<ol><li>Tea</li><li>Coffee</li></ol> का browser में सामान्य अर्थ क्या है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Trust the browser completely.",
-            "hi": "Browser पर पूरी तरह भरोसा करें।"
+            "en": "Two unrelated paragraphs",
+            "hi": "दो असंबंधित paragraphs"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Repeat validation on the server.",
-            "hi": "Server पर validation दोबारा करें।"
+            "en": "An ordered list with two items",
+            "hi": "दो items वाली ordered list"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove validation.",
-            "hi": "Validation हटा दें।"
+            "en": "A table with two columns",
+            "hi": "दो columns वाली table"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "A navigation menu that automatically opens links",
+            "hi": "ऐसा navigation menu जो links अपने आप खोलता है"
           }
         }
       ]
@@ -162,29 +176,36 @@ export const day03:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000033",
       "prompt": {
-        "en": "Which practice improves accessibility?",
-        "hi": "कौन-सी practice accessibility सुधारती है?"
+        "en": "A link should open the user's email app to write to help@example.com. Which href value is appropriate?",
+        "hi": "एक link को help@example.com पर email लिखने के लिए user's email app खोलना है। कौन-सी href value सही है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use meaningful names and clear text alternatives.",
-            "hi": "Meaningful names और clear text alternatives दें।"
+            "en": "https://help@example.com",
+            "hi": "https://help@example.com"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Communicate meaning only through color.",
-            "hi": "Meaning केवल color से बताएं।"
+            "en": "src=\"mailto:help@example.com\"",
+            "hi": "src=\"mailto:help@example.com\""
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove labels and instructions.",
-            "hi": "Labels और instructions हटा दें।"
+            "en": "mailto:help@example.com",
+            "hi": "mailto:help@example.com"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "email:help@example.com",
+            "hi": "email:help@example.com"
           }
         }
       ]
@@ -192,29 +213,36 @@ export const day03:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000034",
       "prompt": {
-        "en": "What is the best way to check your understanding?",
-        "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
+        "en": "A paragraph needs to mark one word as strongly important. Which markup is most appropriate?",
+        "hi": "एक paragraph में एक शब्द को strong importance देनी है। कौन-सा markup सबसे उपयुक्त है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Build the exercise and inspect the result.",
-            "hi": "Exercise बनाएं और result जाँचें।"
+            "en": "<small>important</small>",
+            "hi": "<small>important</small>"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Copy code without reading it.",
-            "hi": "Code पढ़े बिना copy करें।"
+            "en": "<mark>important</mark>",
+            "hi": "<mark>important</mark>"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip testing.",
-            "hi": "Testing छोड़ दें।"
+            "en": "<i>important</i>",
+            "hi": "<i>important</i>"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "<strong>important</strong>",
+            "hi": "<strong>important</strong>"
           }
         }
       ]
