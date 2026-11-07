@@ -62,7 +62,7 @@ begin
   exception when insufficient_privilege then null;
   end;
   begin
-    perform public.mark_lesson_complete((select id from public.lessons where day_number=2));
+    perform public.mark_lesson_complete((select id from public.lessons where day_number=7));
     raise exception 'Completion without passing attempt unexpectedly succeeded';
   exception when insufficient_privilege then null;
   end;
@@ -94,7 +94,7 @@ select public.submit_quiz_attempt(
  '[{"question_id":"30000000-0000-4000-8000-000000000001","option_id":"a"},{"question_id":"30000000-0000-4000-8000-000000000002","option_id":"a"}]'::jsonb
 ) as successful_submission;
 
-select public.mark_lesson_complete((select id from public.lessons where day_number=1));
+select public.mark_lesson_complete((select id from public.lessons where day_number=6));
 
 -- Validation: duplicates, foreign quiz question, incomplete answer set must fail.
 do $$
