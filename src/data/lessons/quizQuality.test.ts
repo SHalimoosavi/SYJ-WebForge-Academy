@@ -5,61 +5,14 @@ import {day03} from './day03';
 import {day04} from './day04';
 import {day05} from './day05';
 import {EXPECTED_QUESTION_IDS} from '../../../scripts/quiz-question-ids.mjs';
-
 const lessons=[day01,day02,day03,day04,day05];
-const expectedIds=[...EXPECTED_QUESTION_IDS];
-const normalize=(value:string)=>value.toLocaleLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
-
-describe('Days 1–5 quiz quality',()=>{
- it('has exactly four questions and four distinct options per lesson',()=>{
-  for(const lesson of lessons){
-   expect(lesson.quiz).toHaveLength(4);
-   for(const question of lesson.quiz){
-    expect(question.options).toHaveLength(4);
-    expect(new Set(question.options.map(option=>option.id)).size).toBe(4);
-    expect(new Set(question.options.map(option=>option.label.en)).size).toBe(4);
-   }
-  }
- });
- it('has unique question IDs matching the answer-key loader schema exactly',()=>{
-  const actual=lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort();
-  expect(new Set(actual).size).toBe(20);
-  expect(actual).toEqual([...expectedIds].sort());
- });
- it('loads a non-empty shared ID allow-list and matches all lesson question IDs exactly',()=>{
-  expect(expectedIds.length).toBeGreaterThan(0);
-  expect(expectedIds).toHaveLength(20);
-  expect(new Set(expectedIds).size).toBe(expectedIds.length);
-  const actual=lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort();
-  expect(actual).toHaveLength(20);
-  expect(new Set(actual).size).toBe(20);
-  expect(actual).toEqual([...expectedIds].sort());
- });
- it('provides non-empty English and Hindi prompts and options',()=>{
-  for(const lesson of lessons){
-   for(const question of lesson.quiz){
-    expect(question.prompt.en.trim().length).toBeGreaterThan(20);
-    expect(question.prompt.hi.trim().length).toBeGreaterThan(10);
-    for(const option of question.options){
-     expect(option.label.en.trim().length).toBeGreaterThan(0);
-     expect(option.label.hi.trim().length).toBeGreaterThan(0);
-    }
-   }
-  }
- });
- it('has no repeated or near-identical prompts across the 20 questions',()=>{
-  const prompts=lessons.flatMap(lesson=>lesson.quiz.map(question=>normalize(question.prompt.en)));
-  expect(new Set(prompts).size).toBe(20);
-  for(let i=0;i<prompts.length;i++)for(let j=i+1;j<prompts.length;j++){
-   const a=new Set(prompts[i].split(' ')),b=new Set(prompts[j].split(' '));
-   const overlap=[...a].filter(word=>b.has(word)).length/Math.max(1,new Set([...a,...b]).size);
-   expect(overlap).toBeLessThan(0.72);
-  }
- });
- it('does not expose correct answers or explanations in the client question type',()=>{
-  for(const lesson of lessons)for(const question of lesson.quiz){
-   expect('correctOptionId' in question).toBe(false);
-   expect('explanation' in question).toBe(false);
-  }
- });
+const ids=lessons.flatMap(day=>day.quiz.map(q=>q.id));
+const normalize=(s:string)=>s.toLocaleLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9]+/g,' ').trim().replace(/\\s+/g,' ');
+describe('Days 1–5 quiz data',()=>{
+ it('has four questions and four unique stable options per day',()=>{for(const day of lessons){expect(day.quiz).toHaveLength(4);for(const q of day.quiz){expect(q.options).toHaveLength(4);expect(new Set(q.options.map(o=>o.id)).size).toBe(4);expect(new Set(q.options.map(o=>o.label.en)).toBe(4);expect(new Set(q.options.map(o=>o.label.hi)).toBe(4);}}});
+ it('matches the shared 20-question ID allow-list exactly',()=>{expect(EXPECTED_QUESTION_IDS).toHaveLength(20);expect(new Set(EXPECTED_QUESTION_IDS).size).toBe(20);expect(ids).toHaveLength(20);expect(new Set(ids).size).toBe(20);expect([...ids].sort()).toEqual([...EXPECTED_QUESTION_IDS].sort());});
+ it('contains English and Hindi text for every prompt and option',()=>{for(const day of lessons)for(const q of day.quiz){expect(q.prompt.en.trim().length).toBeGreaterThan(20);expect(q.prompt.hi.trim().length).toBeGreaterThan(10);for(const o of q.options){expect(o.label.en.trim()).not.toBe('');expect(o.label.hi.trim()).not.toBe('');}}});
+ it('has distinct prompts',()=>{const prompts=lessons.flatMap(day=>day.quiz.map(q=>normalize(q.prompt.en)));expect(new Set(prompts).size).toBe(20);for(let i=0;i<prompts.length;i++)for(let j=i+1;j<prompts.length;j++){const a=new Set(prompts[i].split(' ')),b=new Set(prompts[j].split(' '));const overlap=[...a].filter(x=>b.has(x)).length/Math.max(1,new Set([...a,...b]).size);expect(overlap).toBeLessThan(0.72);}});
+ it('does not expose answer or explanation fields in public question data',()=>{for(const day of lessons)for(const q of day.quiz){expect('correctOptionId' in q).toBe(false);expect('explanation' in q).toBe(false);}});
+ it('keeps the agreed applied-question changes',()=>{expect(day02.quiz[1].prompt.en).toContain('one main heading');expect(day03.quiz[0].prompt.en).toMatch(/^Which attribute/);expect(day04.quiz[1].prompt.en).toContain('audio file');expect(day04.quiz[2].options.find(o=>o.id==='c')?.label.en).toBe('alt="divider.png"');});
 });
