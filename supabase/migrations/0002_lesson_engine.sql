@@ -84,7 +84,7 @@ create table public.quiz_questions (
   unique(quiz_id,position)
 );
 
-create schema private;
+create schema if not exists private;
 revoke all on schema private from public, anon, authenticated;
 create table private.quiz_answer_keys (
   question_id uuid primary key references public.quiz_questions(id) on delete cascade,
