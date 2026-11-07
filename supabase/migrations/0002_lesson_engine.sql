@@ -85,15 +85,15 @@ create table public.quiz_questions (
 );
 
 create schema if not exists private;
-revoke all on schema private from public, anon, authenticated;
-create table private.quiz_answer_keys (
+revoke all on schema lesson_private from public, anon, authenticated;
+create table lesson_private.quiz_answer_keys (
   question_id uuid primary key references public.quiz_questions(id) on delete cascade,
   correct_option_id text not null check(length(correct_option_id) between 1 and 80),
   explanation_en text not null check(length(explanation_en) between 3 and 2000),
   explanation_hi text not null check(length(explanation_hi) between 3 and 2000)
 );
-alter table private.quiz_answer_keys enable row level security;
-revoke all on private.quiz_answer_keys from public, anon, authenticated;
+alter table lesson_private.quiz_answer_keys enable row level security;
+revoke all on lesson_private.quiz_answer_keys from public, anon, authenticated;
 
 create table public.quiz_attempts (
   id uuid primary key default gen_random_uuid(),
@@ -207,13 +207,13 @@ begin
   select count(*) into v_correct
   from jsonb_array_elements(p_answers) a
   join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id
-  join private.quiz_answer_keys k on k.question_id=qq.id
+  join lesson_private.quiz_answer_keys k on k.question_id=qq.id
   where k.correct_option_id=a->>'option_id';
-  if (select count(*) from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid left join private.quiz_answer_keys k on k.question_id=qq.id where qq.quiz_id=p_quiz_id and k.question_id is null)>0 then
+  if (select count(*) from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid left join lesson_private.quiz_answer_keys k on k.question_id=qq.id where qq.quiz_id=p_quiz_id and k.question_id is null)>0 then
     raise exception 'Quiz answer key is incomplete' using errcode='P0001';
   end if;
   v_feedback := (select coalesce(jsonb_agg(jsonb_build_object('question_id',qq.id,'correct',(k.correct_option_id=a->>'option_id'),'explanation_en',k.explanation_en,'explanation_hi',k.explanation_hi) order by qq.position),'[]'::jsonb)
-    from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id join private.quiz_answer_keys k on k.question_id=qq.id);
+    from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id join lesson_private.quiz_answer_keys k on k.question_id=qq.id);
   insert into public.quiz_attempts(learner_id,quiz_id,score,max_score,passed,answers)
   values(v_user,p_quiz_id,round(v_correct::numeric*100/v_total),100,round(v_correct::numeric*100/v_total)>=v_pass_percent,p_answers)
   returning id into v_attempt_id;
