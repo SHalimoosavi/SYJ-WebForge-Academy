@@ -3,7 +3,7 @@ import {supabase} from './supabase';
 
 export type ProgressSnapshot={completedDays:number[];lessonIds:Record<number,string>};
 export type QuizAnswer={question_id:string;option_id:string};
-export type QuizFeedback={question_id:string;correct:boolean;explanation_en:string;explanation_hi:string};
+export type QuizFeedback={question_id:string;correct:boolean;detail:{en:string;hi:string}};
 export type QuizResult={attempt_id:string;score:number;max_score:number;passed:boolean;best_score:number;feedback:QuizFeedback[]};
 
 function parseQuizResult(value:Json):QuizResult{
@@ -14,8 +14,8 @@ function parseQuizResult(value:Json):QuizResult{
  return {attempt_id:record.attempt_id,score:record.score,max_score:record.max_score,passed:record.passed,best_score:record.best_score,feedback:feedback.map(item=>{
   if(typeof item!=='object'||item===null||Array.isArray(item))throw new Error('Invalid quiz feedback item.');
   const row=item as {[key:string]:Json|undefined};
-  if(typeof row.question_id!=='string'||typeof row.correct!=='boolean'||typeof row.explanation_en!=='string'||typeof row.explanation_hi!=='string')throw new Error('Invalid quiz feedback item.');
-  return {question_id:row.question_id,correct:row.correct,explanation_en:row.explanation_en,explanation_hi:row.explanation_hi};
+  if(typeof row.question_id!=='string'||typeof row.correct!=='boolean'||typeof row.detail!=='object'||row.detail===null||Array.isArray(row.detail)||typeof row.detail.en!=='string'||typeof row.detail.hi!=='string')throw new Error('Invalid quiz feedback item.');
+  return {question_id:row.question_id,correct:row.correct,detail:{en:row.detail.en,hi:row.detail.hi}};
  })};
 }
 export async function loadProgress():Promise<ProgressSnapshot>{
