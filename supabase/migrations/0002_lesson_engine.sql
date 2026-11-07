@@ -212,7 +212,7 @@ begin
   if (select count(*) from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid left join lesson_private.quiz_answer_keys k on k.question_id=qq.id where qq.quiz_id=p_quiz_id and k.question_id is null)>0 then
     raise exception 'Quiz answer key is incomplete' using errcode='P0001';
   end if;
-  v_feedback := (select coalesce(jsonb_agg(jsonb_build_object('question_id',qq.id,'correct',(k.correct_option_id=a->>'option_id'),'explanation_en',k.explanation_en,'explanation_hi',k.explanation_hi) order by qq.position),'[]'::jsonb)
+  v_feedback := (select coalesce(jsonb_agg(jsonb_build_object('question_id',qq.id,'correct',(k.correct_option_id=a->>'option_id'),'detail',jsonb_build_object('en',k.explanation_en,'hi',k.explanation_hi)) order by qq.position),'[]'::jsonb)
     from jsonb_array_elements(p_answers) a join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id join lesson_private.quiz_answer_keys k on k.question_id=qq.id);
   insert into public.quiz_attempts(learner_id,quiz_id,score,max_score,passed,answers)
   values(v_user,p_quiz_id,round(v_correct::numeric*100/v_total),100,round(v_correct::numeric*100/v_total)>=v_pass_percent,p_answers)
