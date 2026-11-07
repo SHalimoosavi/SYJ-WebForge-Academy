@@ -48,8 +48,10 @@ jobs:
         run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/0002_lesson_engine.sql
       - name: Seed Days 1-5 quizzes and private answer keys
         run: psql -v ON_ERROR_STOP=1 -f supabase/seed/0002_days_01_05_quizzes.sql
-      - name: Run database security and concurrency tests
+      - name: Run database security tests
         run: psql -v ON_ERROR_STOP=1 -f supabase/tests/lesson_engine_security.sql
+      - name: Run concurrent rate-limit and batch-capacity tests
+        run: bash supabase/tests/concurrency.sh
 
   frontend:
     runs-on: ubuntu-latest
