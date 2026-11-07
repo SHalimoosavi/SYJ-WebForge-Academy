@@ -7,6 +7,7 @@ import {day05} from '../data/lessons/day05';
 import type {LessonContent} from '../data/lessonTypes';
 import {completeLesson,loadProgress,saveExercise,submitQuiz,type QuizAnswer,type QuizResult} from '../lib/lessonProgress';
 import {supabase} from '../lib/supabase';
+import {isLessonUnlocked,isQuizComplete} from '../lib/lessonRules';
 
 type Content=LessonContent & {quizId:string};
 const lessons:Record<number,Content>={1:day01,2:day02,3:day03,4:day04,5:day05};
@@ -31,11 +32,11 @@ export function LessonPage({day,onNavigate}:Props){
  if(!lesson)return <main className="lesson-shell"><h1>Lesson not found</h1><a href="#/curriculum">Back to curriculum</a></main>;
  const text=(value:{en:string;hi:string})=>value[language];
  const quizAnswers:QuizAnswer[]=lesson.quiz.filter(q=>answers[q.id]).map(q=>({question_id:q.id,option_id:answers[q.id]}));
- async function handleQuiz(){setBusy(true);setError('');setNotice('');try{if(quizAnswers.length!==lesson.quiz.length)throw new Error(language==='en'?'Answer every question before submitting.':'Submit करने से पहले हर question का answer दें।');const r=await submitQuiz(lesson.quizId,quizAnswers);setResult(r);if(r.passed)setNotice(language==='en'?'Quiz passed. You can now complete this lesson.':'Quiz पास हो गया। अब lesson पूरा कर सकते हैं।');}catch(e){setError(e instanceof Error?e.message:'Quiz submission failed.');}finally{setBusy(false);}}
+ async function handleQuiz(){setBusy(true);setError('');setNotice('');try{if(!isQuizComplete(lesson.quiz.map(q=>q.id),answers))throw new Error(language==='en'?'Answer every question before submitting.':'Submit करने से पहले हर question का answer दें।');const r=await submitQuiz(lesson.quizId,quizAnswers);setResult(r);if(r.passed)setNotice(language==='en'?'Quiz passed. You can now complete this lesson.':'Quiz पास हो गया। अब lesson पूरा कर सकते हैं।');}catch(e){setError(e instanceof Error?e.message:'Quiz submission failed.');}finally{setBusy(false);}}
  async function handleComplete(){setBusy(true);setError('');try{if(!result?.passed)throw new Error(language==='en'?'Pass the quiz before completing this lesson.':'Lesson पूरा करने से पहले quiz पास करें।');const p=await loadProgress();const id=p.lessonIds[day];if(!id)throw new Error('Lesson is not seeded in the learning database.');await completeLesson(id);setCompleted(v=>v.includes(day)?v:[...v,day]);setNotice(language==='en'?'Lesson completion saved.':'Lesson completion save हो गया।');}catch(e){setError(e instanceof Error?e.message:'Could not complete lesson.');}finally{setBusy(false);}}
  async function handleExercise(){setBusy(true);setError('');try{const p=await loadProgress();const id=p.lessonIds[day];if(!id)throw new Error('Lesson is not seeded in the learning database.');await saveExercise(id,lesson.slug,exercise);setExerciseSaved(true);setNotice(t.saved);}catch(e){setError(e instanceof Error?e.message:'Could not save exercise.');}finally{setBusy(false);}}
  async function copyCode(){try{await navigator.clipboard.writeText(lesson.exercise.starterCode);setCopied(true);setTimeout(()=>setCopied(false),1600);}catch{setError(language==='en'?'Clipboard access was blocked by the browser. Select and copy the code manually.':'Browser ने clipboard access रोक दिया। Code select करके manually copy करें।');}}
- const canNext=completed.includes(day);
+ const canNext=isLessonUnlocked(day+1,completed);
  return <main className="lesson-shell">
   <header className="lesson-top"><a href="#/" onClick={()=>onNavigate('/')}>SYJ WebAcademy</a><nav aria-label="Lesson navigation"><a href="#/curriculum" onClick={()=>onNavigate('/curriculum')}>Curriculum</a><button className="language-toggle" onClick={()=>setLanguage(v=>v==='en'?'hi':'en')} aria-label="Switch lesson language">{language==='en'?'हिन्दी':'English'}</button></nav></header>
   <div className="lesson-layout"><aside className="lesson-sidebar"><strong>{t.contents}</strong><ol>{lesson.sections.map(s=><li key={s.id}><a href={'#'+s.id}>{text(s.title)}</a></li>)}<li><a href="#practice">{t.practice}</a></li><li><a href="#quiz">{t.quiz}</a></li><li><a href="#assignment">{t.assignment}</a></li></ol><div className="progress-mini"><span>{completed.length}/5 {language==='en'?'completed':'पूरे'}</span><div><i style={{width:(completed.length/5*100)+'%'}}/></div></div></aside>
