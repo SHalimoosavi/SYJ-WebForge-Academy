@@ -34,6 +34,23 @@ begin
 end $$;
 \echo PASS: five public quizzes and twenty questions seeded; real answer keys remain external
 
+-- Audit all SECURITY DEFINER functions for a pinned search_path and minimum RPC grants.
+do $$
+declare unsafe_functions text;
+begin
+ select string_agg(n.nspname||'.'||p.proname,', ' order by n.nspname,p.proname)
+ into unsafe_functions
+ from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+ where p.prosecdef
+ and not exists(select 1 from unnest(coalesce(p.proconfig,array[]::text[])) as cfg(setting) where cfg.setting like 'search_path=%');
+ if unsafe_functions is not null then raise exception 'SECURITY DEFINER functions without fixed search_path: %',unsafe_functions; end if;
+ if has_function_privilege('anon','public.submit_quiz_attempt(uuid,jsonb)','execute') then raise exception 'anon can execute submit_quiz_attempt'; end if;
+ if has_function_privilege('anon','public.mark_lesson_complete(uuid)','execute') then raise exception 'anon can execute mark_lesson_complete'; end if;
+ if not has_function_privilege('authenticated','public.submit_quiz_attempt(uuid,jsonb)','execute') then raise exception 'authenticated cannot execute submit_quiz_attempt'; end if;
+ if not has_function_privilege('authenticated','public.mark_lesson_complete(uuid)','execute') then raise exception 'authenticated cannot execute mark_lesson_complete'; end if;
+end $$;
+\echo PASS: SECURITY DEFINER search_path and RPC privilege audit
+
 -- No client insert privilege and no answer-key access.
 do $$
 begin
