@@ -75,7 +75,7 @@ end $$;
 
 -- Legacy progress must remain intact after the new schema is applied.
 reset role;
-do $
+do $$
 begin
   if not exists(select 1 from public.lesson_progress lp join public.lessons l on l.id=lp.lesson_id
     where lp.learner_id='10000000-0000-4000-8000-000000000001' and l.day_number=1 and lp.completed) then
@@ -84,7 +84,7 @@ begin
   if (select count(*) from public.lessons where day_number between 1 and 40)<>40 then
     raise exception 'Existing 40-day lesson catalogue was not preserved';
   end if;
-end $;
+end $$;
 set role authenticated;
 select set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000001',false);
 
