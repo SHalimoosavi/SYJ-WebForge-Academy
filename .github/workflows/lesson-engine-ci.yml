@@ -45,6 +45,8 @@ jobs:
           psql -v ON_ERROR_STOP=1 -f supabase/seed.sql
       - name: Apply lesson engine migration
         run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/0002_lesson_engine.sql
+      - name: Seed Days 1-5 quizzes and private answer keys
+        run: psql -v ON_ERROR_STOP=1 -f supabase/seed/0002_days_01_05_quizzes.sql
       - name: Run database security and concurrency tests
         run: psql -v ON_ERROR_STOP=1 -f supabase/tests/lesson_engine_security.sql
 
