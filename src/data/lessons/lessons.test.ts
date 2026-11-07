@@ -36,7 +36,7 @@ describe('Days 1–5 published learning content',()=>{
     expect(question.id).toMatch(/^[0-9a-f-]{36}$/i);
     expect(question.prompt.en.length).toBeGreaterThan(10);
     expect(question.prompt.hi.length).toBeGreaterThan(10);
-    expect(question.options).toHaveLength(3);
+    expect(question.options).toHaveLength(4);
     expect('correctOptionId' in question).toBe(false);
     expect('explanation' in question).toBe(false);
    }
