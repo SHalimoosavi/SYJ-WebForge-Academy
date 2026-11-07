@@ -2,6 +2,7 @@
 import {afterEach,describe,expect,it} from 'vitest';
 import {cleanup,fireEvent,render,screen,waitFor} from '@testing-library/react';
 import {LessonPage} from './LessonPage';
+import {day01} from '../data/lessons/day01';
 
 afterEach(()=>cleanup());
 describe('lesson page accessibility and language behavior',()=>{
@@ -12,7 +13,7 @@ describe('lesson page accessibility and language behavior',()=>{
   expect(screen.getByRole('navigation',{name:'Lesson navigation'})).toBeTruthy();
   expect(screen.getByRole('heading',{name:'Learning objectives'})).toBeTruthy();
   expect(screen.getAllByRole('group').length).toBeGreaterThanOrEqual(4);
-  expect(screen.getAllByRole('radio').length).toBe(12);
+  expect(screen.getAllByRole('radio').length).toBe(day01.quiz.reduce((total,question)=>total+question.options.length,0));
   expect(screen.getByLabelText('Your edited code or written response')).toBeTruthy();
   expect(screen.getByRole('button',{name:'Switch lesson language'})).toBeTruthy();
  });
