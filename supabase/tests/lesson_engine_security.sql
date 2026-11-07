@@ -26,16 +26,16 @@ insert into lesson_private.quiz_answer_keys(question_id,correct_option_id,explan
 on conflict(question_id) do nothing;
 
 -- Confirm the public Day 1–5 quiz bank is complete without storing real keys in Git.
-do $
+do $$
 begin
   if (select count(*) from public.quizzes q join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>5 then raise exception 'Expected five Day 1–5 quizzes'; end if;
   if (select count(*) from public.quiz_questions qq join public.quizzes q on q.id=qq.quiz_id join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>20 then raise exception 'Expected twenty Day 1–5 questions'; end if;
   if (select count(*) from lesson_private.quiz_answer_keys k join public.quiz_questions qq on qq.id=k.question_id join public.quizzes q on q.id=qq.quiz_id join public.lessons l on l.id=q.lesson_id where l.day_number between 1 and 5)<>0 then raise exception 'Real Day 1–5 answer keys must not be present in the public test fixture'; end if;
-end $;
+end $$;
 \echo PASS: five public quizzes and twenty questions seeded; real answer keys remain external
 
 -- No client insert privilege and no answer-key access.
-do $
+do $$
 begin
   if has_table_privilege('authenticated','public.quiz_attempts','insert') then raise exception 'authenticated unexpectedly has quiz_attempts INSERT'; end if;
   if has_table_privilege('authenticated','lesson_private.quiz_answer_keys','select') then raise exception 'authenticated unexpectedly has answer-key SELECT'; end if;
