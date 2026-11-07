@@ -1,13 +1,13 @@
-import {readFileSync} from 'node:fs';
 import {describe,expect,it} from 'vitest';
 import {day01} from './day01';
 import {day02} from './day02';
 import {day03} from './day03';
 import {day04} from './day04';
 import {day05} from './day05';
+import {EXPECTED_QUESTION_IDS} from '../../../scripts/quiz-question-ids.mjs';
 
 const lessons=[day01,day02,day03,day04,day05];
-const expectedIds=Array.from({length:5},(_,d)=>Array.from({length:4},(_,q)=>`60000000-0000-4000-8000-0000000000${d+1}${q+1}`)).flat();
+const expectedIds=[...EXPECTED_QUESTION_IDS];
 const normalize=(value:string)=>value.toLocaleLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 
 describe('Days 1–5 quiz quality',()=>{
@@ -26,11 +26,14 @@ describe('Days 1–5 quiz quality',()=>{
   expect(new Set(actual).size).toBe(20);
   expect(actual).toEqual([...expectedIds].sort());
  });
- it('matches every published question ID to the protected loader allow-list',()=>{
-  const loader=readFileSync(new URL('../../../scripts/seed-lesson-answer-keys.mjs',import.meta.url),'utf8');
-  const allowed=[...loader.matchAll(/'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/gi)].map(match=>match[1]).sort();
-  expect(allowed).toEqual([...expectedIds].sort());
-  expect(lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort()).toEqual(allowed);
+ it('loads a non-empty shared ID allow-list and matches all lesson question IDs exactly',()=>{
+  expect(expectedIds.length).toBeGreaterThan(0);
+  expect(expectedIds).toHaveLength(20);
+  expect(new Set(expectedIds).size).toBe(expectedIds.length);
+  const actual=lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort();
+  expect(actual).toHaveLength(20);
+  expect(new Set(actual).size).toBe(20);
+  expect(actual).toEqual([...expectedIds].sort());
  });
  it('provides non-empty English and Hindi prompts and options',()=>{
   for(const lesson of lessons){
