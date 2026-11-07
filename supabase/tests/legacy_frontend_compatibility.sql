@@ -9,8 +9,9 @@ select set_config('request.jwt.claim.sub','10000000-0000-4000-8000-000000000001'
 select id,full_name,role,preferred_language from public.profiles
  where id=auth.uid();
 select batch_id from public.batch_memberships where learner_id=auth.uid() limit 1;
-select completed,lessons(day_number) from public.lesson_progress
- where learner_id=auth.uid() and completed=true;
+select lp.completed,l.day_number from public.lesson_progress lp
+ join public.lessons l on l.id=lp.lesson_id
+ where lp.learner_id=auth.uid() and lp.completed=true;
 select id from public.lessons where day_number=1 limit 1;
 select * from public.list_open_batches();
 
