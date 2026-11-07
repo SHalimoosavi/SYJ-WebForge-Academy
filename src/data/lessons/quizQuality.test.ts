@@ -2,7 +2,7 @@ import {describe,expect,it} from 'vitest';
 import {day01} from './day01';import {day02} from './day02';import {day03} from './day03';import {day04} from './day04';import {day05} from './day05';
 import {EXPECTED_QUESTION_IDS} from '../../../scripts/quiz-question-ids.mjs';
 const lessons=[day01,day02,day03,day04,day05],ids=lessons.flatMap(d=>d.quiz.map(q=>q.id));
-const normalize=(s:string)=>s.toLocaleLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9]+/g,' ').trim().replace(/\\s+/g,' ');
+const normalize=(s:string)=>s.toLocaleLowerCase().replace(/<[^>]+>/g,' ').replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
 describe('Days 1–5 quiz data',()=>{
  it('has four questions and four unique stable options per day',()=>{for(const d of lessons){expect(d.quiz).toHaveLength(4);for(const q of d.quiz){expect(q.options).toHaveLength(4);expect(new Set(q.options.map(o=>o.id)).size).toBe(4);expect(new Set(q.options.map(o=>o.label.en)).size).toBe(4);expect(new Set(q.options.map(o=>o.label.hi)).size).toBe(4);}}});
  it('matches the shared 20-question ID allow-list exactly',()=>{expect(EXPECTED_QUESTION_IDS).toHaveLength(20);expect(new Set(EXPECTED_QUESTION_IDS).size).toBe(20);expect(ids).toHaveLength(20);expect(new Set(ids).size).toBe(20);expect([...ids].sort()).toEqual([...EXPECTED_QUESTION_IDS].sort());});
