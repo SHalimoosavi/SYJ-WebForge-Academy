@@ -15,6 +15,9 @@ describe.skipIf(!available)('local protected answer-key checks',()=>{
   const byId=new Map(keys.map(k=>[k.question_id,k.correct_option_id])),counts={A:0,B:0,C:0,D:0};
   for(const lesson of lessons)for(const q of lesson.quiz){const id=byId.get(q.id);expect(id).toBeDefined();const index=q.options.findIndex(o=>o.id===id);expect(index).toBeGreaterThanOrEqual(0);counts['ABCD'[index] as keyof typeof counts]++;const wrong=q.options.filter(o=>o.id!==id);expect(wrong).toHaveLength(3);expect(wrong.every(o=>o.id!==id)).toBe(true);}
   expect(counts).toEqual({A:5,B:5,C:5,D:5});
+  const patterns=lessons.map(lesson=>lesson.quiz.map(q=>{const id=byId.get(q.id)!;return 'ABCD'[q.options.findIndex(o=>o.id===id)];}).join(''));
+  expect(patterns.every(pattern=>!pattern.includes('ABCD'))).toBe(true);
+  expect(new Set(patterns).size).toBe(5);
  });
 });
 if(!available)console.info('SKIP: local protected answer-key checks require private/answer-keys-days01-05.json; CI public checks do not have this file.');

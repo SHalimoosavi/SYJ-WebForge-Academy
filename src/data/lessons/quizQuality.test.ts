@@ -23,7 +23,7 @@ describe('answer display-order quality (public option data only)',()=>{
  it('has no A-B-C-D run within any day',()=>{for(const pattern of displayPatterns)expect(pattern).not.toContain('ABCD');});
  it('uses a distinct correct-answer letter pattern for every day',()=>{expect(new Set(displayPatterns).size).toBe(5);});
  it('preserves the approved per-question option-ID display order',()=>{
-  const expected=[['b','c','a','d'],['b','d','c','a'],['d','b','c','a'],['b','a','c','d'],['c','d','a','b']];
+  const expected=[[["b","c","a","d"],["d","a","b","c"],["a","c","d","b"],["a","c","b","d"]],[["b","a","c","d"],["a","c","d","b"],["c","a","b","d"],["a","b","d","c"]],[["b","c","d","a"],["a","b","c","d"],["a","b","c","d"],["d","a","b","c"]],[["b","a","c","d"],["a","b","c","d"],["b","a","c","d"],["a","b","c","d"]],[["a","c","b","d"],["b","c","d","a"],["c","a","b","d"],["a","d","b","c"]]];
   for(let d=0;d<5;d++)expect(lessons[d].quiz.map(q=>q.options.map(o=>o.id))).toEqual(expected[d]);
  });
 });
