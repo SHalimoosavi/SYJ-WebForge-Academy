@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 import {describe,expect,it} from 'vitest';
 import {day01} from './day01';
 import {day02} from './day02';
@@ -24,6 +25,12 @@ describe('Days 1–5 quiz quality',()=>{
   const actual=lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort();
   expect(new Set(actual).size).toBe(20);
   expect(actual).toEqual([...expectedIds].sort());
+ });
+ it('matches every published question ID to the protected loader allow-list',()=>{
+  const loader=readFileSync(new URL('../../../scripts/seed-lesson-answer-keys.mjs',import.meta.url),'utf8');
+  const allowed=[...loader.matchAll(/'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/gi)].map(match=>match[1]).sort();
+  expect(allowed).toEqual([...expectedIds].sort());
+  expect(lessons.flatMap(lesson=>lesson.quiz.map(question=>question.id)).sort()).toEqual(allowed);
  });
  it('provides non-empty English and Hindi prompts and options',()=>{
   for(const lesson of lessons){
