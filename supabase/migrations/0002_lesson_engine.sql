@@ -191,6 +191,16 @@ begin
   if exists(select 1 from jsonb_array_elements(p_answers) a where not exists(select 1 from public.quiz_questions qq where qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id)) then
     raise exception 'Question does not belong to this quiz' using errcode='22023';
   end if;
+  if exists(
+    select 1 from jsonb_array_elements(p_answers) a
+    join public.quiz_questions qq on qq.id=(a->>'question_id')::uuid and qq.quiz_id=p_quiz_id
+    where not exists(
+      select 1 from jsonb_array_elements(qq.options) opt
+      where opt->>'id'=a->>'option_id'
+    )
+  ) then
+    raise exception 'Selected option does not belong to its question' using errcode='22023';
+  end if;
   if (select count(*) from public.quiz_attempts a where a.learner_id=v_user and a.quiz_id=p_quiz_id and a.attempted_at>now()-interval '1 hour')>=10 then
     raise exception 'Hourly attempt limit reached' using errcode='P0001';
   end if;
