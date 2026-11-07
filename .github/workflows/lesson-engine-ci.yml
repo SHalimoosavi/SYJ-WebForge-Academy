@@ -1,0 +1,61 @@
+name: Lesson engine PostgreSQL security tests
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feat/interactive-lessons]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postgres-security:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: academy_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d academy_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGDATABASE: academy_test
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PostgreSQL client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - name: Bootstrap Supabase-compatible auth roles
+        run: psql -v ON_ERROR_STOP=1 -f supabase/tests/bootstrap.sql
+      - name: Apply baseline schema and catalogue seed
+        run: |
+          psql -v ON_ERROR_STOP=1 -f supabase/migrations/0001_initial_schema.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/seed.sql
+      - name: Apply lesson engine migration
+        run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/0002_lesson_engine.sql
+      - name: Run database security and concurrency tests
+        run: psql -v ON_ERROR_STOP=1 -f supabase/tests/lesson_engine_security.sql
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
