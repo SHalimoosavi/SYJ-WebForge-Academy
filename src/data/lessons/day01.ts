@@ -102,29 +102,36 @@ export const day01:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000011",
       "prompt": {
-        "en": "Which statement best describes the main concept in this lesson?",
-        "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
+        "en": "Which statement correctly separates the Internet from the World Wide Web?",
+        "hi": "कौन-सा कथन Internet और World Wide Web का सही अंतर बताता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use the semantic, standards-based approach taught in the lesson.",
-            "hi": "Lesson में सिखाया गया semantic और standards-based तरीका अपनाएं।"
+            "en": "The Internet connects networks; the Web is a service of linked resources that uses it.",
+            "hi": "Internet networks को जोड़ता है; Web उस पर चलने वाली linked resources की service है।"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Choose elements only for their default visual appearance.",
-            "hi": "Elements केवल उनके default visual look के आधार पर चुनें।"
+            "en": "The Web connects routers; the Internet is a collection of web pages.",
+            "hi": "Web routers को जोड़ता है; Internet web pages का समूह है।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip browser behavior and rely only on styling.",
-            "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
+            "en": "The Internet only carries email; the Web carries every other kind of data.",
+            "hi": "Internet केवल email ले जाता है; Web बाकी सभी तरह का data ले जाता है।"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "The Internet and the Web are two names for the same thing.",
+            "hi": "Internet और Web एक ही चीज़ के दो नाम हैं।"
           }
         }
       ]
@@ -132,29 +139,36 @@ export const day01:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000012",
       "prompt": {
-        "en": "What should you do when a browser-side check can be bypassed?",
-        "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
+        "en": "A browser opens https://learn.example/courses/html?level=beginner#forms. Which part is the fragment?",
+        "hi": "Browser https://learn.example/courses/html?level=beginner#forms खोलता है। इसमें fragment कौन-सा हिस्सा है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Trust the browser completely.",
-            "hi": "Browser पर पूरी तरह भरोसा करें।"
+            "en": "/courses/html",
+            "hi": "/courses/html"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Repeat validation on the server.",
-            "hi": "Server पर validation दोबारा करें।"
+            "en": "learn.example",
+            "hi": "learn.example"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove validation.",
-            "hi": "Validation हटा दें।"
+            "en": "level=beginner",
+            "hi": "level=beginner"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "forms",
+            "hi": "forms"
           }
         }
       ]
@@ -162,29 +176,36 @@ export const day01:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000013",
       "prompt": {
-        "en": "Which practice improves accessibility?",
-        "hi": "कौन-सी practice accessibility सुधारती है?"
+        "en": "What normally happens after a browser receives an HTML response from a server?",
+        "hi": "Server से HTML response मिलने के बाद सामान्यतः browser क्या करता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use meaningful names and clear text alternatives.",
-            "hi": "Meaningful names और clear text alternatives दें।"
+            "en": "It assumes every linked file is already inside the HTML.",
+            "hi": "वह मान लेता है कि सभी linked files HTML में पहले से मौजूद हैं।"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Communicate meaning only through color.",
-            "hi": "Meaning केवल color से बताएं।"
+            "en": "It parses the HTML and requests linked resources such as CSS, scripts and images.",
+            "hi": "वह HTML parse करता है और CSS, scripts तथा images जैसे linked resources माँगता है।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove labels and instructions.",
-            "hi": "Labels और instructions हटा दें।"
+            "en": "It sends the HTML to DNS to translate it into an IP address.",
+            "hi": "वह HTML को IP address में बदलने के लिए DNS को वापस भेजता है।"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "It changes the server's HTTP status code to 200.",
+            "hi": "वह server का HTTP status code 200 कर देता है।"
           }
         }
       ]
@@ -192,29 +213,36 @@ export const day01:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000014",
       "prompt": {
-        "en": "What is the best way to check your understanding?",
-        "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
+        "en": "What does this response status mean: HTTP/1.1 404 Not Found?",
+        "hi": "इस response status का क्या अर्थ है: HTTP/1.1 404 Not Found?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Build the exercise and inspect the result.",
-            "hi": "Exercise बनाएं और result जाँचें।"
+            "en": "The request succeeded and the resource was returned.",
+            "hi": "Request सफल हुई और resource मिल गया।"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Copy code without reading it.",
-            "hi": "Code पढ़े बिना copy करें।"
+            "en": "The browser must sign in before continuing.",
+            "hi": "आगे बढ़ने से पहले browser को sign in करना होगा।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip testing.",
-            "hi": "Testing छोड़ दें।"
+            "en": "The requested resource could not be found at that URL.",
+            "hi": "उस URL पर माँगा गया resource नहीं मिला।"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "The server permanently moved the resource to a new URL.",
+            "hi": "Server ने resource को स्थायी रूप से नए URL पर भेज दिया।"
           }
         }
       ]
