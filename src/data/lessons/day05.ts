@@ -102,29 +102,36 @@ export const day05:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000051",
       "prompt": {
-        "en": "Which statement best describes the main concept in this lesson?",
-        "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
+        "en": "Which markup correctly connects a visible label to an email input?",
+        "hi": "कौन-सा markup visible label को email input से सही तरह जोड़ता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use the semantic, standards-based approach taught in the lesson.",
-            "hi": "Lesson में सिखाया गया semantic और standards-based तरीका अपनाएं।"
+            "en": "<label>Email</label><input type=\"email\">",
+            "hi": "<label>Email</label><input type=\"email\">"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Choose elements only for their default visual appearance.",
-            "hi": "Elements केवल उनके default visual look के आधार पर चुनें।"
+            "en": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">",
+            "hi": "<label for=\"email\">Email</label><input id=\"email\" type=\"email\">"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip browser behavior and rely only on styling.",
-            "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
+            "en": "<input type=\"email\" label=\"Email\">",
+            "hi": "<input type=\"email\" label=\"Email\">"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "<p>Email</p><input type=\"email\" placeholder=\"Email\">",
+            "hi": "<p>Email</p><input type=\"email\" placeholder=\"Email\">"
           }
         }
       ]
@@ -132,29 +139,36 @@ export const day05:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000052",
       "prompt": {
-        "en": "What should you do when a browser-side check can be bypassed?",
-        "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
+        "en": "What happens when a required email input is empty and the user submits a normal browser-validated form?",
+        "hi": "जब required email input खाली हो और user सामान्य browser-validated form submit करे, तो क्या होता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Trust the browser completely.",
-            "hi": "Browser पर पूरी तरह भरोसा करें।"
+            "en": "The browser normally blocks submission and reports a constraint validation error.",
+            "hi": "Browser सामान्यतः submission रोकता है और constraint validation error दिखाता है।"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Repeat validation on the server.",
-            "hi": "Server पर validation दोबारा करें।"
+            "en": "The browser automatically invents an email address.",
+            "hi": "Browser अपने आप email address बना देता है।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove validation.",
-            "hi": "Validation हटा दें।"
+            "en": "The browser silently changes the input type to text.",
+            "hi": "Browser चुपचाप input type को text कर देता है।"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "The browser submits the form and marks the field as valid.",
+            "hi": "Browser form submit करके field को valid मान लेता है।"
           }
         }
       ]
@@ -162,29 +176,36 @@ export const day05:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000053",
       "prompt": {
-        "en": "Which practice improves accessibility?",
-        "hi": "कौन-सी practice accessibility सुधारती है?"
+        "en": "A group of related radio buttons needs a shared accessible caption. Which elements should wrap the group?",
+        "hi": "Related radio buttons के group को shared accessible caption चाहिए। कौन-से elements group को wrap करें?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use meaningful names and clear text alternatives.",
-            "hi": "Meaningful names और clear text alternatives दें।"
+            "en": "section and header",
+            "hi": "section और header"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Communicate meaning only through color.",
-            "hi": "Meaning केवल color से बताएं।"
+            "en": "div and span",
+            "hi": "div और span"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove labels and instructions.",
-            "hi": "Labels और instructions हटा दें।"
+            "en": "fieldset and legend",
+            "hi": "fieldset और legend"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "label and placeholder",
+            "hi": "label और placeholder"
           }
         }
       ]
@@ -192,29 +213,36 @@ export const day05:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000054",
       "prompt": {
-        "en": "What is the best way to check your understanding?",
-        "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
+        "en": "A search form should put a non-sensitive search term in the URL so the result can be bookmarked. Which method is the best fit?",
+        "hi": "Search form में non-sensitive search term URL में रखना है ताकि result bookmark हो सके। कौन-सा method सही है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Build the exercise and inspect the result.",
-            "hi": "Exercise बनाएं और result जाँचें।"
+            "en": "POST, because it always makes data bookmarkable",
+            "hi": "POST, क्योंकि यह हमेशा data bookmarkable बनाता है"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Copy code without reading it.",
-            "hi": "Code पढ़े बिना copy करें।"
+            "en": "PUT, because browsers require it for all forms",
+            "hi": "PUT, क्योंकि सभी forms के लिए browser इसे जरूरी मानता है"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip testing.",
-            "hi": "Testing छोड़ दें।"
+            "en": "PATCH, because search modifies the server",
+            "hi": "PATCH, क्योंकि search server को बदलता है"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "GET, because form data is placed in the URL query string",
+            "hi": "GET, क्योंकि form data URL query string में जाता है"
           }
         }
       ]
