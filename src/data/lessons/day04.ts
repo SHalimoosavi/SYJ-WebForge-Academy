@@ -102,29 +102,36 @@ export const day04:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000041",
       "prompt": {
-        "en": "Which statement best describes the main concept in this lesson?",
-        "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
+        "en": "Which attribute gives a meaningful text alternative for an informative image?",
+        "hi": "Informative image के लिए meaningful text alternative कौन-सा attribute देता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use the semantic, standards-based approach taught in the lesson.",
-            "hi": "Lesson में सिखाया गया semantic और standards-based तरीका अपनाएं।"
+            "en": "title",
+            "hi": "title"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Choose elements only for their default visual appearance.",
-            "hi": "Elements केवल उनके default visual look के आधार पर चुनें।"
+            "en": "alt",
+            "hi": "alt"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip browser behavior and rely only on styling.",
-            "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
+            "en": "href",
+            "hi": "href"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "width",
+            "hi": "width"
           }
         }
       ]
@@ -132,29 +139,36 @@ export const day04:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000042",
       "prompt": {
-        "en": "What should you do when a browser-side check can be bypassed?",
-        "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
+        "en": "What does this element do? <img src=\"map.png\" alt=\"Map showing the campus entrance\">",
+        "hi": "यह element क्या करता है? <img src=\"map.png\" alt=\"Map showing the campus entrance\">"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Trust the browser completely.",
-            "hi": "Browser पर पूरी तरह भरोसा करें।"
+            "en": "Creates a clickable link to map.png",
+            "hi": "map.png के लिए clickable link बनाता है"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Repeat validation on the server.",
-            "hi": "Server पर validation दोबारा करें।"
+            "en": "Plays map.png as an audio file",
+            "hi": "map.png को audio file की तरह चलाता है"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove validation.",
-            "hi": "Validation हटा दें।"
+            "en": "Embeds an image and provides its text alternative",
+            "hi": "Image embed करता है और उसका text alternative देता है"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "Creates a video player with captions",
+            "hi": "Captions वाला video player बनाता है"
           }
         }
       ]
@@ -162,29 +176,36 @@ export const day04:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000043",
       "prompt": {
-        "en": "Which practice improves accessibility?",
-        "hi": "कौन-सी practice accessibility सुधारती है?"
+        "en": "A decorative divider image adds no information. Which alt value is normally appropriate?",
+        "hi": "एक decorative divider image कोई जानकारी नहीं देती। सामान्यतः कौन-सी alt value सही है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use meaningful names and clear text alternatives.",
-            "hi": "Meaningful names और clear text alternatives दें।"
+            "en": "alt=\"\"",
+            "hi": "alt=\"\""
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Communicate meaning only through color.",
-            "hi": "Meaning केवल color से बताएं।"
+            "en": "alt=\"decorative divider image\"",
+            "hi": "alt=\"decorative divider image\""
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove labels and instructions.",
-            "hi": "Labels और instructions हटा दें।"
+            "en": "Remove the img element",
+            "hi": "img element हटा दें"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "alt=\"image\"",
+            "hi": "alt=\"image\""
           }
         }
       ]
@@ -192,29 +213,36 @@ export const day04:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000044",
       "prompt": {
-        "en": "What is the best way to check your understanding?",
-        "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
+        "en": "Which markup provides native browser controls for a video file?",
+        "hi": "Video file के लिए browser के native controls कौन-सा markup देता है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Build the exercise and inspect the result.",
-            "hi": "Exercise बनाएं और result जाँचें।"
+            "en": "<audio controls src=\"clip.mp4\"></audio>",
+            "hi": "<audio controls src=\"clip.mp4\"></audio>"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Copy code without reading it.",
-            "hi": "Code पढ़े बिना copy करें।"
+            "en": "<img controls src=\"clip.mp4\">",
+            "hi": "<img controls src=\"clip.mp4\">"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip testing.",
-            "hi": "Testing छोड़ दें।"
+            "en": "<source controls src=\"clip.mp4\">",
+            "hi": "<source controls src=\"clip.mp4\">"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "<video controls src=\"clip.mp4\"></video>",
+            "hi": "<video controls src=\"clip.mp4\"></video>"
           }
         }
       ]
