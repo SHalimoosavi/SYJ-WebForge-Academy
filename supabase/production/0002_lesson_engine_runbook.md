@@ -4,7 +4,8 @@
 
 ## Artifacts
 - Migration: `supabase/migrations/0002_lesson_engine.sql`
-- Days 1–5 quiz catalogue and private answer-key seed: `supabase/seed/0002_days_01_05_quizzes.sql`
+- Days 1–5 public quiz catalogue seed: `supabase/seed/0002_days_01_05_quizzes.sql`
+- Protected answer-key loader: `scripts/seed-lesson-answer-keys.mjs` (requires `SYJ_LESSON_ANSWER_KEYS_JSON`; the real answer-key payload is intentionally not committed)
 - Guarded rollback: `supabase/rollback/0002_lesson_engine_rollback.sql`
 
 ## Preconditions
@@ -17,12 +18,13 @@
 
 ## Apply sequence (approval required)
 1. Apply `0002_lesson_engine.sql` in a transaction-capable SQL session.
-2. Apply `seed/0002_days_01_05_quizzes.sql` to insert public quiz questions and private answer keys.
-3. Verify exactly 40 legacy lessons remain, their IDs are unchanged, all course/track mappings exist, and pre-existing `lesson_progress` rows are unchanged.
-4. Verify the five quizzes, twenty questions and twenty private answer keys exist.
-5. Verify `anon` and `authenticated` cannot select `private.quiz_answer_keys`; authenticated users cannot directly insert quiz attempts or change profile role; RPC execution is limited to authenticated users.
-6. Run a two-user RLS smoke test, quiz pass/fail test, hourly rate-limit test and capacity-one concurrent enrolment test.
-7. Enable the lesson UI only after all checks pass. Monitor database errors, quiz submission failures and rate-limit rejections.
+2. Apply `seed/0002_days_01_05_quizzes.sql` to insert the public Day 1–5 quiz questions.
+3. Supply the 20 correct option IDs and bilingual explanations through a protected secret named `SYJ_LESSON_ANSWER_KEYS_JSON`, then run `node scripts/seed-lesson-answer-keys.mjs` against the approved database connection. Never place the JSON payload in Git, frontend source, CI logs or shell history.
+4. Verify exactly 40 legacy lessons remain, their IDs are unchanged, all course/track mappings exist, and pre-existing `lesson_progress` rows are unchanged.
+5. Verify the five quizzes, twenty questions and twenty private answer keys exist.
+6. Verify `anon` and `authenticated` cannot select `private.quiz_answer_keys`; authenticated users cannot directly insert quiz attempts or change profile role; RPC execution is limited to authenticated users.
+7. Run a two-user RLS smoke test, quiz pass/fail test, hourly rate-limit test and capacity-one concurrent enrolment test.
+8. Enable the lesson UI only after all checks pass. Monitor database errors, quiz submission failures and rate-limit rejections.
 
 ## Rollback (approval required)
 1. Disable lesson-engine entry points in the frontend first.
