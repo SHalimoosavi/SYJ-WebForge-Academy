@@ -102,29 +102,36 @@ export const day02:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000021",
       "prompt": {
-        "en": "Which statement best describes the main concept in this lesson?",
-        "hi": "इस lesson की मुख्य अवधारणा को कौन-सा कथन सही बताता है?"
+        "en": "In an HTML document, where should the page title and character-encoding declaration normally be placed?",
+        "hi": "HTML document में page title और character-encoding declaration सामान्यतः कहाँ होने चाहिए?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use the semantic, standards-based approach taught in the lesson.",
-            "hi": "Lesson में सिखाया गया semantic और standards-based तरीका अपनाएं।"
+            "en": "Inside the head element",
+            "hi": "head element के अंदर"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Choose elements only for their default visual appearance.",
-            "hi": "Elements केवल उनके default visual look के आधार पर चुनें।"
+            "en": "Inside the footer element",
+            "hi": "footer element के अंदर"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip browser behavior and rely only on styling.",
-            "hi": "Browser behavior छोड़कर केवल styling पर निर्भर रहें।"
+            "en": "After the closing html tag",
+            "hi": "closing html tag के बाद"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "Inside every paragraph element",
+            "hi": "हर paragraph element के अंदर"
           }
         }
       ]
@@ -132,29 +139,36 @@ export const day02:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000022",
       "prompt": {
-        "en": "What should you do when a browser-side check can be bypassed?",
-        "hi": "जब browser-side check को bypass किया जा सकता है, तब क्या करना चाहिए?"
+        "en": "What does this HTML snippet display as the main heading? <h1>Welcome</h1>",
+        "hi": "यह HTML snippet मुख्य heading के रूप में क्या दिखाता है? <h1>Welcome</h1>"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Trust the browser completely.",
-            "hi": "Browser पर पूरी तरह भरोसा करें।"
+            "en": "A browser tab title only",
+            "hi": "केवल browser tab का title"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Repeat validation on the server.",
-            "hi": "Server पर validation दोबारा करें।"
+            "en": "A level-one heading containing Welcome",
+            "hi": "Welcome वाली level-one heading"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove validation.",
-            "hi": "Validation हटा दें।"
+            "en": "A hyperlink to a page named Welcome",
+            "hi": "Welcome नाम के page का hyperlink"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "A form input with the value Welcome",
+            "hi": "Welcome value वाला form input"
           }
         }
       ]
@@ -162,29 +176,36 @@ export const day02:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000023",
       "prompt": {
-        "en": "Which practice improves accessibility?",
-        "hi": "कौन-सी practice accessibility सुधारती है?"
+        "en": "A page needs a navigation landmark for its primary site links. Which element is the best semantic choice?",
+        "hi": "Page के मुख्य site links के लिए navigation landmark चाहिए। कौन-सा element सही semantic choice है?"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Use meaningful names and clear text alternatives.",
-            "hi": "Meaningful names और clear text alternatives दें।"
+            "en": "<div>",
+            "hi": "<div>"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Communicate meaning only through color.",
-            "hi": "Meaning केवल color से बताएं।"
+            "en": "<span>",
+            "hi": "<span>"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Remove labels and instructions.",
-            "hi": "Labels और instructions हटा दें।"
+            "en": "<nav>",
+            "hi": "<nav>"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "<aside>",
+            "hi": "<aside>"
           }
         }
       ]
@@ -192,29 +213,36 @@ export const day02:LessonContent & {quizId:string}={
     {
       "id": "60000000-0000-4000-8000-000000000024",
       "prompt": {
-        "en": "What is the best way to check your understanding?",
-        "hi": "अपनी समझ जाँचने का सबसे अच्छा तरीका क्या है?"
+        "en": "Which change fixes this document-language issue? <html lang=\"\">",
+        "hi": "इस document-language issue को कौन-सा बदलाव ठीक करता है? <html lang=\"\">"
       },
       "options": [
         {
           "id": "a",
           "label": {
-            "en": "Build the exercise and inspect the result.",
-            "hi": "Exercise बनाएं और result जाँचें।"
+            "en": "Add lang to body and leave html empty.",
+            "hi": "body में lang जोड़ें और html खाली छोड़ें।"
           }
         },
         {
           "id": "b",
           "label": {
-            "en": "Copy code without reading it.",
-            "hi": "Code पढ़े बिना copy करें।"
+            "en": "Replace lang with charset.",
+            "hi": "lang को charset से बदलें।"
           }
         },
         {
           "id": "c",
           "label": {
-            "en": "Skip testing.",
-            "hi": "Testing छोड़ दें।"
+            "en": "Put the language only in a CSS class.",
+            "hi": "Language केवल CSS class में लिखें।"
+          }
+        },
+        {
+          "id": "d",
+          "label": {
+            "en": "Set a valid language tag, for example <html lang=\"en\">.",
+            "hi": "एक valid language tag सेट करें, जैसे <html lang=\"en\">।"
           }
         }
       ]
