@@ -86,7 +86,7 @@ jobs:
           npm run build
       - name: Inspect production bundle for secrets and answer keys
         run: |
-          if grep -R -n -E 'correctOptionId|correct_option_id|SUPABASE_SERVICE_ROLE|service_role|secret_key_base|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----' dist; then
+          if grep -R -n -E 'correctOptionId|correct_option_id|explanation_en|explanation_hi|SUPABASE_SERVICE_ROLE|service_role|secret_key_base|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----' dist; then
             echo 'Sensitive answer-key or secret marker found in dist/' >&2
             exit 1
           fi
