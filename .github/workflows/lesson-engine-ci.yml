@@ -43,6 +43,7 @@ jobs:
         run: |
           psql -v ON_ERROR_STOP=1 -f supabase/migrations/0001_initial_schema.sql
           psql -v ON_ERROR_STOP=1 -f supabase/seed.sql
+          psql -v ON_ERROR_STOP=1 -f supabase/tests/pre_migration_fixtures.sql
       - name: Apply lesson engine migration
         run: psql -v ON_ERROR_STOP=1 -f supabase/migrations/0002_lesson_engine.sql
       - name: Seed Days 1-5 quizzes and private answer keys
