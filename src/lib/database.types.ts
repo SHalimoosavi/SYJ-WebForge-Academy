@@ -33,7 +33,7 @@ export type Database = {
         ]>;
       exercise_results: Table<
         { id:string; learner_id:string; lesson_id:string; exercise_key:string; status:"started"|"submitted"|"passed"|"needs_revision"; submission_text:string; submission_url:string|null; feedback:string; created_at:string; updated_at:string },
-        { id?:string; learner_id:string; lesson_id:string; exercise_key:string; status:"started"|"submitted"|"passed"|"needs_revision"; submission_text?:string; submission_url?:string|null; feedback?:string },
+        { id?:string; learner_id:string; lesson_id:string; exercise_key:string; submission_text?:string; submission_url?:string|null },
         { status?:"started"|"submitted"|"passed"|"needs_revision"; submission_text?:string; submission_url?:string|null; feedback?:string }
       >;
     };
