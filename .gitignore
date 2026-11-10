@@ -5,3 +5,11 @@ dist/
 !.env.example
 *.local
 .DS_Store
+
+# Protected assessment keys — never commit
+private/answer-keys-days01-05.json
+private/answer-keys-*.json
+
+# Local review exports — never commit
+private/review-export-days01-05.txt
+private/review-export-*.txt

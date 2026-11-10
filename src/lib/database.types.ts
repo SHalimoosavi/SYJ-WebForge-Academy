@@ -31,12 +31,25 @@ export type Database = {
           { foreignKeyName: "lesson_progress_learner_id_fkey"; columns: ["learner_id"]; isOneToOne: false; referencedRelation: "profiles"; referencedColumns: ["id"] },
           { foreignKeyName: "lesson_progress_lesson_id_fkey"; columns: ["lesson_id"]; isOneToOne: false; referencedRelation: "lessons"; referencedColumns: ["id"] }
         ]>;
+      exercise_results: Table<
+        { id:string; learner_id:string; lesson_id:string; exercise_key:string; status:"started"|"submitted"|"passed"|"needs_revision"; submission_text:string; submission_url:string|null; feedback:string; created_at:string; updated_at:string },
+        { id?:string; learner_id:string; lesson_id:string; exercise_key:string; submission_text?:string; submission_url?:string|null },
+        { status?:"started"|"submitted"|"passed"|"needs_revision"; submission_text?:string; submission_url?:string|null; feedback?:string }
+      >;
     };
     Views: { [_ in never]: never };
     Functions: {
       list_open_batches: {
         Args: Record<PropertyKey, never>;
         Returns: { id: string; name: string; capacity: number; status: Database["public"]["Enums"]["batch_status"]; enrolled_count: number }[];
+      };
+      submit_quiz_attempt: {
+        Args: { p_quiz_id: string; p_answers: Json };
+        Returns: Json;
+      };
+      mark_lesson_complete: {
+        Args: { p_lesson_id: string };
+        Returns: boolean;
       };
     };
     Enums: { app_role: "learner" | "trainer" | "admin"; batch_status: "upcoming" | "active" | "completed"; submission_status: "submitted" | "reviewing" | "approved" | "revision_requested" };
