@@ -55,5 +55,5 @@ for(const {day,rows} of days){
  });
  lines.push(`END OF DAY ${day}`,'');
 }
-await writeFile(outPath,lines.join('\\n')+'\\n',{mode:0o600});
+await writeFile(outPath,lines.join('\n')+'\n',{mode:0o600});
 process.stdout.write(`Review export written: ${outPath}\\n`);
